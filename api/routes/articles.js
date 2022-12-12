@@ -11,6 +11,8 @@ router.get(
   articleController.getByUserId
 );
 
+router.get("/category/:id", articleController.getByCategoryId);
+
 router.get("/:id", articleController.getById);
 
 router.post(

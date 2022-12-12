@@ -10,15 +10,16 @@ module.exports = categoryService = {
     return category;
   },
   create: async (category) => {
-    const categories = await knex("categories").insert(category);
+    const categories = await knex("categories").insert(category).returning("*");
     return categories;
   },
-  update: async (id, category) => {
-    const categories = await knex("categories").where("id", id).update({
-      title: category.title,
-      content: category.content,
-      image: category.image,
-    });
+  update: async (id, name) => {
+    const categories = await knex("categories")
+      .where("id", id)
+      .update({
+        name,
+      })
+      .returning("*");
     return categories;
   },
   delete: async (id) => {

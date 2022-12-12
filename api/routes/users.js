@@ -7,8 +7,16 @@ router.post("/register", userController.registerUser);
 
 router.post("/login", passport.authenticate("local"), userController.loginUser);
 
-router.post("/update", userController.updateUser);
+router.put(
+  "/update",
+  passport.authenticate("jwt", { session: false }),
+  userController.updateUser
+);
 
-router.put("/update-password", userController.updatePassword);
+router.put(
+  "/update-password",
+  passport.authenticate("jwt", { session: false }),
+  userController.updatePassword
+);
 
 module.exports = router;

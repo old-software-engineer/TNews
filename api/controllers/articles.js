@@ -1,30 +1,64 @@
 const articleService = require("../services/articleService");
+const reactionService = require("../services/reactionService");
 const helper = require("../utils/common");
 
 const getAll = async (req, res, next) => {
   try {
     const articles = await articleService.getAll();
-    res.json(articles);
+    helper.handleResponseWithData(res, 201, articles);
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 
 const getByUserId = async (req, res, next) => {
   try {
     const articles = await articleService.getByUserId(req.user.id);
-    res.json(articles);
+    helper.handleResponseWithData(res, 201, articles);
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
+  }
+};
+
+const getByCategoryId = async (req, res, next) => {
+  try {
+    const articles = await articleService.getByCategoryId(req.params.id);
+    helper.handleResponseWithData(res, 201, articles);
+  } catch (error) {
+    helper.handleResponse(res, 500, error);
   }
 };
 
 const getById = async (req, res, next) => {
   try {
     const article = await articleService.getById(req.params.id);
-    res.json(article);
+    if (article) {
+      const reaction = await reactionService.getCountArticleReactions(
+        req.params.id
+      );
+      if (req.body.user_id) {
+        const userReaction = await reactionService.getByArticleUser(
+          req.params.id,
+          req.body.user_id
+        );
+        helper.handleResponseWithData(res, 201, {
+          ...article,
+          ...reaction,
+          current_user_reaction: userReaction?.reaction
+            ? userReaction.reaction
+            : null,
+        });
+      } else {
+        helper.handleResponseWithData(res, 201, {
+          ...article,
+          ...reaction,
+        });
+      }
+    } else {
+      helper.handleResponse(res, 401, "Article does not exist");
+    }
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 
@@ -33,9 +67,9 @@ const create = async (req, res, next) => {
     const body = req.body;
     const user_id = req.user.id;
     const article = await articleService.create({ ...body, user_id });
-    res.json(article);
+    helper.handleResponseWithData(res, 201, article);
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 
@@ -47,9 +81,9 @@ const update = async (req, res, next) => {
     try {
       const { id } = req.body;
       const article = await articleService.update(id, req.body);
-      res.json(article);
+      helper.handleResponseWithData(res, 201, article);
     } catch (error) {
-      next(error);
+      helper.handleResponse(res, 500, error);
     }
   }
 };
@@ -60,10 +94,10 @@ const deleteArticle = async (req, res, next) => {
     return helper.handleResponse(res, 401, "You are not authorised");
   } else {
     try {
-      const article = await articleService.delete(req.params.id);
-      res.json(article);
+      await articleService.delete(req.params.id);
+      helper.handleResponse(res, 201, "Article has been deleted");
     } catch (error) {
-      next(error);
+      helper.handleResponse(res, 500, error);
     }
   }
 };
@@ -71,6 +105,7 @@ const deleteArticle = async (req, res, next) => {
 module.exports = {
   getAll,
   getByUserId,
+  getByCategoryId,
   getById,
   create,
   update,

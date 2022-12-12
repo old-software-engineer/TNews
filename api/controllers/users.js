@@ -1,5 +1,4 @@
 const userService = require("../services/userService");
-const authHelper = require("../utils/auth");
 const helper = require("../utils/common");
 const bcrypt = require("bcryptjs");
 
@@ -8,7 +7,7 @@ const getAllUsers = async (req, res) => {
     const users = await userService.getAll();
     res.json(users);
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 
@@ -34,7 +33,7 @@ const registerUser = async (req, res) => {
     return helper.handleResponse(res, 401, "User already exists");
   } else {
     try {
-      handleErrors(req);
+      await handleErrors(req);
       const salt = bcrypt.genSaltSync();
       const hash = bcrypt.hashSync(req.body.password, salt);
       const user = await userService.create({
@@ -53,8 +52,8 @@ const registerUser = async (req, res) => {
         user,
         token: "Bearer " + token,
       });
-    } catch (err) {
-      helper.handleResponse(res, 500, err);
+    } catch (error) {
+      helper.handleResponse(res, 500, error);
     }
   }
 };
@@ -66,29 +65,31 @@ const updateUser = async (req, res) => {
   } else {
     try {
       handleErrors(req);
-      const { id, name, email } = req.body;
-      const user = await userService.update(id, { name, email });
-      res.json(user);
+      const { id } = req.user;
+      const { name, email } = req.body;
+      await userService.update(id, { name, email });
+      helper.handleResponse(res, 500, "User details have been updated");
     } catch (error) {
-      next(error);
+      helper.handleResponse(res, 500, error);
     }
   }
 };
 
 const updatePassword = async (req, res, next) => {
   try {
-    const { id, old_password, new_password } = req.body;
+    const { id } = req.user;
+    const { old_password, new_password } = req.body;
     const user = await userService.getById(id);
-    if (authHelper.comparePass(old_password, user.password)) {
+    if (helper.comparePass(old_password, user.password)) {
       const salt = bcrypt.genSaltSync();
       const hash = bcrypt.hashSync(new_password, salt);
-      const user = await userService.updatePassword(id, hash);
-      res.json(user);
+      await userService.updatePassword(id, hash);
+      helper.handleResponse(res, 500, "Password has been updated");
     } else {
       helper.handleResponse(res, 401, "Old password is incorrect");
     }
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 

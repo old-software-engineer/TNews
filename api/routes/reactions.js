@@ -4,6 +4,6 @@ const reactionController = require("../controllers/reactions");
 
 router.post("/create", reactionController.create)
 
-router.post("/update", reactionController.update)
+router.put("/update", reactionController.update)
 
 module.exports = router;

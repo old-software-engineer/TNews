@@ -1,3 +1,4 @@
+const helper = require("../utils/common");
 const reactionService = require("../services/reactionService");
 
 const create = async (req, res, next) => {
@@ -13,13 +14,13 @@ const create = async (req, res, next) => {
         existingReaction.id,
         reaction
       );
-      res.json(result);
+      helper.handleResponseWithData(res, 201, result);
     } else {
       const reaction = await reactionService.create(req.body);
-      res.json(reaction);
+      helper.handleResponseWithData(res, 201, reaction);
     }
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 
@@ -27,9 +28,9 @@ const update = async (req, res, next) => {
   try {
     const { id, reaction } = req.body;
     const result = await reactionService.update(id, reaction);
-    res.json(result);
+    helper.handleResponseWithData(res, 201, result);
   } catch (error) {
-    next(error);
+    helper.handleResponse(res, 500, error);
   }
 };
 

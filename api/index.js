@@ -4,12 +4,19 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 const routes = require("./routes");
+const cors = require("cors");
 app.use(bodyParser.json());
 app.use(
   session({
     secret: "random string",
     saveUninitialized: true,
     resave: false,
+  })
+);
+
+app.use(
+  cors({
+    origin: "*",
   })
 );
 

@@ -5,7 +5,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 const init = require("./passport");
 const knex = require("../db");
-const authHelper = require("./auth");
+const helper = require("./common");
 require("dotenv").config();
 init();
 
@@ -22,7 +22,7 @@ passport.use(
     const user = await knex("users").where({ email }).first();
 
     if (!user) return done(null, false, { message: "Incorrect Username" });
-    if (!authHelper.comparePass(password, user.password)) {
+    if (!helper.comparePass(password, user.password)) {
       return done(null, false, { message: "Incorrect password" });
     }
     return done(null, user);
