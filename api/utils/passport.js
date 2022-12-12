@@ -1,6 +1,5 @@
 const passport = require("passport");
-const knexConfig = require("../db/knexfile");
-const knex = require("knex")(knexConfig[process.env.NODE_ENV]);
+const knex = require("../db");
 
 module.exports = () => {
   passport.serializeUser((user, done) => {

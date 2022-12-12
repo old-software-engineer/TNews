@@ -27,12 +27,16 @@ module.exports = articleService = {
       .where("users.id", id);
     return articles;
   },
-  getById: async (article_id, user_id) => {
+  checkUserArticle: async (article_id, user_id) => {
+    const article = await knex("articles")
+      .where({ id: article_id, user_id })
+      .first();
+    return article;
+  },
+  getById: async (article_id) => {
     const article = await knex("articles")
       .where("articles.id", article_id)
-      .join("reactions", "reactions.article_id", "articles.id")
-      .where("reactions.user_id", user_id)
-      .select("articles.*", "reactions.reaction", "reactions.id as reaction_id");
+      .first();
     return article;
   },
   create: async (article) => {
@@ -40,12 +44,13 @@ module.exports = articleService = {
     return articles;
   },
   update: async (id, article) => {
-    const articles = await knex("articles").where("id", id).update({
+    const result = await knex("articles").where("id", id).update({
       title: article.title,
-      content: article.content,
-      image: article.image,
+      description: article.description,
+      public_access: article.public_access,
+      category_id: article.category_id,
     });
-    return articles;
+    return result;
   },
   delete: async (id) => {
     const articles = await knex("articles").where("id", id).del();

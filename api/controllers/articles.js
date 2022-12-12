@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
 const articleService = require("../services/articleService");
+const helper = require("../utils/common");
 
 const getAll = async (req, res, next) => {
   try {
@@ -11,36 +11,18 @@ const getAll = async (req, res, next) => {
 };
 
 const getByUserId = async (req, res, next) => {
-  let token = req.header("Authorization");
-  if (!token) return res.status(401).send("Access Denied");
   try {
-    if (token.startsWith("Bearer ")) {
-      // Remove Bearer from string
-      token = token.slice(7, token.length).trimLeft();
-    }
-    const verified = jwt.verify(token, "random string");
-    if (verified) {
-      const articles = await articleService.getByUserId(verified.id);
-      res.json(articles);
-    }
+    const articles = await articleService.getByUserId(req.user.id);
+    res.json(articles);
   } catch (error) {
     next(error);
   }
 };
 
 const getById = async (req, res, next) => {
-  let token = req.header("Authorization");
-  if (!token) return res.status(401).send("Access Denied");
   try {
-    if (token.startsWith("Bearer ")) {
-      // Remove Bearer from string
-      token = token.slice(7, token.length).trimLeft();
-    }
-    const verified = jwt.verify(token, "random string");
-    if (verified) {
-      const article = await articleService.getById(req.params.id, verified.id);
-      res.json(article);
-    }
+    const article = await articleService.getById(req.params.id);
+    res.json(article);
   } catch (error) {
     next(error);
   }
@@ -48,11 +30,49 @@ const getById = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
-    const article = await articleService.create(req.body);
+    const body = req.body;
+    const user_id = req.user.id;
+    const article = await articleService.create({ ...body, user_id });
     res.json(article);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { getAll, getByUserId, getById, create };
+const update = async (req, res, next) => {
+  const checkUser = articleService.checkUserArticle(req.body.id, req.user.id);
+  if (!checkUser) {
+    return helper.handleResponse(res, 401, "You are not authorised");
+  } else {
+    try {
+      const { id } = req.body;
+      const article = await articleService.update(id, req.body);
+      res.json(article);
+    } catch (error) {
+      next(error);
+    }
+  }
+};
+
+const deleteArticle = async (req, res, next) => {
+  const checkUser = articleService.checkUserArticle(req.params.id, req.user.id);
+  if (!checkUser) {
+    return helper.handleResponse(res, 401, "You are not authorised");
+  } else {
+    try {
+      const article = await articleService.delete(req.params.id);
+      res.json(article);
+    } catch (error) {
+      next(error);
+    }
+  }
+};
+
+module.exports = {
+  getAll,
+  getByUserId,
+  getById,
+  create,
+  update,
+  deleteArticle,
+};
