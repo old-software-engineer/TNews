@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.20.0"
+  },
   "scripts": {
     "build": "npx tsc",
-    "start": "NODE_ENV=development nodemon index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "node index.js",
     "migrate": "knex migrate:latest --knexfile db/knexfile.js",
     "seed": "knex seed:run --knexfile db/knexfile.js"
   },

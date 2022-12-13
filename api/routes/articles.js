@@ -13,7 +13,7 @@ router.get(
 
 router.get("/category/:id", articleController.getByCategoryId);
 
-router.get("/:id", articleController.getById);
+router.get("/:id", articleController.getByArticleId);
 
 router.post(
   "/create",

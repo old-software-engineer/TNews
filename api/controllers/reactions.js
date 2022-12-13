@@ -1,7 +1,7 @@
 const helper = require("../utils/common");
 const reactionService = require("../services/reactionService");
 
-const create = async (req, res, next) => {
+const changeReaction = async (req, res, next) => {
   try {
     const { article_id, user_id, reaction } = req.body;
     //  Check if any reaction with same user_id and article exists
@@ -24,14 +24,4 @@ const create = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {
-  try {
-    const { id, reaction } = req.body;
-    const result = await reactionService.update(id, reaction);
-    helper.handleResponseWithData(res, 201, result);
-  } catch (error) {
-    helper.handleResponse(res, 500, error);
-  }
-};
-
-module.exports = { create, update };
+module.exports = { changeReaction };

@@ -46,7 +46,7 @@ module.exports = articleService = {
       .first();
     return article;
   },
-  getById: async (article_id) => {
+  getByArticleId: async (article_id) => {
     const article = await knex("articles")
       .where("articles.id", article_id)
       .first();

@@ -14,7 +14,7 @@ module.exports = userService = {
     return user;
   },
   create: async (user) => {
-    const users = await knex("users").insert(user).returning("*");
+    const users = await knex("users").insert(user).returning(['name', 'email']);
     return users;
   },
   update: async (id, user) => {

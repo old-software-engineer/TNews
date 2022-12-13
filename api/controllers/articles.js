@@ -29,21 +29,18 @@ const getByCategoryId = async (req, res, next) => {
   }
 };
 
-const getById = async (req, res, next) => {
+const getByArticleId = async (req, res, next) => {
   try {
-    const article = await articleService.getById(req.params.id);
+    const article = await articleService.getByArticleId(req.params.id);
     if (article) {
-      const reaction = await reactionService.getCountArticleReactions(
-        req.params.id
-      );
+      const reactions = await reactionService.getByArticleId(req.params.id);
       if (req.body.user_id) {
-        const userReaction = await reactionService.getByArticleUser(
-          req.params.id,
-          req.body.user_id
+        const userReaction = reactions.find(
+          (e) => e.user_id == req.body.user_id
         );
         helper.handleResponseWithData(res, 201, {
           ...article,
-          ...reaction,
+          likesCount: reactions.length,
           current_user_reaction: userReaction?.reaction
             ? userReaction.reaction
             : null,
@@ -51,7 +48,7 @@ const getById = async (req, res, next) => {
       } else {
         helper.handleResponseWithData(res, 201, {
           ...article,
-          ...reaction,
+          likesCount: reactions.length,
         });
       }
     } else {
@@ -106,7 +103,7 @@ module.exports = {
   getAll,
   getByUserId,
   getByCategoryId,
-  getById,
+  getByArticleId,
   create,
   update,
   deleteArticle,
