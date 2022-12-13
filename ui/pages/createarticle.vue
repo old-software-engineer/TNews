@@ -1,8 +1,12 @@
 <template>
     <div>
-        <Dashboard />
+        <Createarticle />
     </div>
 </template>
 
 <script>
+export default {
+
+
+}
 </script>

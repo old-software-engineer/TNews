@@ -1,8 +1,9 @@
 <template>
     <div>
         <Navbar :path="path" />
-        <div></div>
-        <slot />
+        <div class="mt-10">
+            <slot />
+        </div>
         <Footer />
     </div>
 </template>
@@ -12,8 +13,7 @@
 export default {
     watch: {
         $route(newPath, oldPath) {
-            this.foo = newPath.fullPath
-
+            this.path = newPath.fullPath
         },
     },
     data() {
@@ -22,7 +22,7 @@ export default {
         return {
             path: routeName
         }
-    }
+    },
 }
 </script>
 

@@ -1,10 +1,30 @@
 <template>
     <div>
-        <div class="mt-12 text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">All publications</h2>
-            <p class="mt-3 text-xl text-gray-500 sm:mt-4 text-center">Nullam risus blandit ac aliquam justo ipsum. Quam
-                mauris volutpat massa dictumst amet. Sapien tortor lacus arcu.</p>
-        </div>
-        <Articles />
+        <Articles :heading="heading" :posts="articles" />
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        const heading = {
+            title: "All publications",
+            description: "Nullam risus blandit ac aliquam justo ipsum. Quam mauris volutpat massa dictumst amet. Sapien tortor lacus arcu."
+        }
+        return {
+            articles: [],
+            heading
+        }
+    },
+    methods: {
+        async getArticles() {
+            const articles = await fetch("http://localhost:3000/articles/all");
+            this.articles = await articles.json();
+        }
+    },
+    created() {
+        this.getArticles();
+    }
+}
+</script>
+
