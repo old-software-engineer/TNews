@@ -8,7 +8,7 @@
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form @submit.prevent="createUser()" class="space-y-6" action="#" method="POST">
+        <form @submit.prevent="validateForm()" class="space-y-6" action="#" method="POST">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <div class="mt-1">
@@ -55,7 +55,8 @@
 
 <script>
 import axios from 'axios';
-
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({ /* options */ });
 export default {
   data() {
     return {
@@ -66,17 +67,34 @@ export default {
     };
   },
   methods: {
-   createUser() {
+    validateForm() {
+
+      if (this.name.length < 5) {
+        toaster.show(`Name should be atleast six letters long!`);
+      }
+      else if (this.password < 6) {
+        toaster.show("Password should be atleat 6 characters!")
+      }
+      else if (this.password != this.confirmPassword) {
+        toaster.show("Password does not match!")
+      }
+      else {
+        this.createUser()
+      }
+    },
+    createUser() {
       axios.post('http://localhost:3000/user/register',
         {
           name: this.name,
           email: this.email,
           password: this.password
         }
-      ).then(response => {
-        console.log(response);
+      ).then(res => {
+        console.log(res);
+        this.$router.push('/login')
       })
     }
   },
+
 }
 </script>

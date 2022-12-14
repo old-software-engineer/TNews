@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="mt-12 text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ heading.title }}</h2>
-      <p class="mt-3 text-xl text-gray-500 sm:mt-4 text-center">{{ heading.description }}</p>
+      <h2 class="text-3xl capitalize font-bold tracking-tight text-gray-900 sm:text-4xl">{{ heading }}</h2>
     </div>
     <div class="bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-15 lg:pb-28">
       <div class="relative mx-auto max-w-lg lg:max-w-7xl">
@@ -52,11 +51,11 @@
                 <MenuItems
                   class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div class="py-1">
-                    <MenuItem v-for="option in categoryOptions" :key="option.name" v-slot="{ active }">
-                    <a :href="option.href"
-                      :class="[option.current ? 'font-medium text-gray-900' : 'text-gray-500', active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']">{{
-                          option.name
-                      }}</a>
+                    <MenuItem>
+                    <NuxtLink href="/" class="text-gray-500 block px-4 py-2 text-sm hover:">All</NuxtLink>
+                    </MenuItem>
+                    <MenuItem v-for="category in categories" :key="category.id">
+                    <NuxtLink class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer" @click="handleClick(category.name, category.id)">{{ category.name}}</NuxtLink>
                     </MenuItem>
                   </div>
                 </MenuItems>
@@ -97,6 +96,22 @@ const categoryOptions = [
 
 <script>
 export default {
-  props: ['posts', 'heading'],
+  data() {
+return {
+  categories: []
+}
+  },  methods: {
+        async getCategories() {
+            const categories = await fetch("http://localhost:3000/categories/all");
+            this.categories = await categories.json();
+        },
+        handleClick(categoryName, categoryId) {
+        this.$router.push(`/${categoryName.toLowerCase()}/${categoryId}`)
+        }
+    },
+    created() {
+        this.getCategories();
+    },
+  props: ['posts', 'heading']
 }
 </script>

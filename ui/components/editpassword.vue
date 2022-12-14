@@ -7,22 +7,22 @@
                     <div class="rounded  shadow p-6">
                         <div class="pb-4">
                             <label for="oldPassword" class="font-semibold text-gray-700 block pb-1">Old Password</label>
-                            <input id="oldPassword" class="border border-gray-300   rounded-r px-4 py-2 w-full"
-                                type="password" value="" />
+                            <input id="oldPassword" v-model="oldPassword"
+                                class="border border-gray-300   rounded-r px-4 py-2 w-full" type="password" />
                         </div>
                         <div class="pb-4">
                             <label for="newPassword" class="font-semibold text-gray-700 block pb-1">New Password</label>
-                            <input id="newPassword" class="border border-gray-300   rounded-r px-4 py-2 w-full"
-                                type="password" value="" />
+                            <input id="newPassword" v-model="newPassword"
+                                class="border border-gray-300   rounded-r px-4 py-2 w-full" type="password" />
                         </div>
                         <div class="pb-4">
                             <label for="confirmPassword" class="font-semibold text-gray-700 block pb-1">Confirm
                                 Password</label>
-                            <input id="confirmPassword" class="border border-gray-300   rounded-r px-4 py-2 w-full"
-                                type="password" value="" />
+                            <input id="confirmPassword" v-model="confirmPassword"
+                                class="border border-gray-300   rounded-r px-4 py-2 w-full" type="password" />
                         </div>
                         <div class="flex justify-end">
-                            <a href="#"
+                            <a href="#" @click="validateForm"
                                 class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800">Save</a>
                         </div>
                     </div>
@@ -31,8 +31,36 @@
         </div>
     </div>
 </template>
-s
+
 <script>
 export default {
+    data() {
+        return {
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+        };
+    },
+    methods: {
+        validateForm() {
+            this.updatePassword()
+        },
+        async updatePassword() {
+            const user = await fetch("http://localhost:3000/user/update-password",
+                {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": localStorage.token
+                    },
+                    body: JSON.stringify({
+                        oldPassword: this.oldPassword,
+                        newPassword: this.newPassword
+                    })
+                })
+            const res = await user.json()
+            console.log(res)
+            this.$router.push('/')
+        }
+    }
 }
 </script>

@@ -46,12 +46,19 @@
 </template>
 
 <script>
+import { mapActions, storeToRefs } from "pinia";
+import { userStore } from "../store/user"
+const main = userStore();
+const { user } = storeToRefs(main);
+const { setUser } = mapActions(userStore, ["setUser"])
 
 export default {
   data() {
     return {
       email: '',
       password: '',
+      user: user,
+      setUser: setUser
     };
   },
 
@@ -70,7 +77,9 @@ export default {
         })
       const res = await user.json()
       console.log(res)
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('token', res.token);
+      this.setUser(res.user);
+      this.$router.push('/')
     }
   }
 }

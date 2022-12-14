@@ -3,3 +3,7 @@
         <Article />
     </div>
 </template>
+
+<script>
+
+</script>

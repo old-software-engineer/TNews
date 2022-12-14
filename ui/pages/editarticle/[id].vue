@@ -4,9 +4,9 @@
             <div class="h-full flex justify-center">
                 <div class="w-1/2 mt-5 md:mt-0 md:col-span-2">
                     <h2 class="mt-6 mb-9 text-3xl font-bold tracking-tight text-gray-900">
-                        Create New Article
+                        Edit Article
                     </h2>
-                    <form @submit.prevent="createArticle">
+                    <form @submit.prevent="updateArticle">
                         <div class="shadow sm:rounded-md  sm:overflow-hidden">
                             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                 <div class="grid grid-cols-3 gap-6">
@@ -66,7 +66,10 @@
 <script>
 export default {
     data() {
+        const route = useRoute()
+        const routeName = route.path.split('/')[2]
         return {
+            path: routeName,
             categories: [],
             newArticel: {},
             title: '',
@@ -76,23 +79,24 @@ export default {
         }
     },
     methods: {
-        async createArticle() {
-            const newArticle = await fetch("http://localhost:3000/articles/create", {
-                method: "POST",
+        async updateArticle() {
+            const updatedArticle = await fetch("http://localhost:3000/articles/update", {
+                method: "PUT",
                 headers: {
                     "content-type": "application/json",
                     "Authorization": localStorage.token
                 },
                 body: JSON.stringify({
+                    id: this.path,
                     title: this.title,
                     description: this.description,
                     public_access: this.public_access ? true : false,
                     category_id: this.category_id
                 })
             })
-            const res = await newArticle.json()
+            const res = await updatedArticle.json()
             console.log(res)
-            this.$router.push('/myarticles')
+            this.$router.push(`/articles/${this.path}`)
         },
         async getCategories() {
             const categories = await fetch("http://localhost:3000/categories/all");
