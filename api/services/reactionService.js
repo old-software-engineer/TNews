@@ -13,6 +13,7 @@ module.exports = reactionService = {
   getByArticleId: async (article_id) => {
     const reactions = await knex("reactions").where({
       article_id,
+      reaction: "like",
     });
     return reactions;
   },
