@@ -6,7 +6,7 @@
                     <h2 class="mt-6 mb-9 text-3xl font-bold tracking-tight text-gray-900">
                         Create New Article
                     </h2>
-                    <form @submit.prevent="createArticle">
+                    <form @submit.prevent="validateForm()">
                         <div class="shadow sm:rounded-md  sm:overflow-hidden">
                             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                 <div class="grid grid-cols-3 gap-6">
@@ -26,7 +26,7 @@
                                         About
                                     </label>
                                     <div class="mt-3">
-                                        <textarea id="about" rows="4" v-model="description"
+                                        <textarea id="about" rows="4" v-model="description" required
                                             class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Description of your article"></textarea>
                                     </div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                 <button
-                                    class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800">
+                                    :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2', title && description && category_id ? 'hover:bg-gray-800' : '']">
                                     Save
                                 </button>
                             </div>
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({ /* options */ });
 export default {
     data() {
         return {
@@ -76,6 +78,19 @@ export default {
         }
     },
     methods: {
+        validateForm() {
+            let incorrectInput = '';
+            if (this.title.length < 5) {
+                incorrectInput += "Title should be atleast five letters long!. "
+            }
+            if (!(6 < this.description.length && this.description.length < 500)) {
+                incorrectInput += "Description should be greater than 6 characters and less than 500 characters!\n"
+                toaster.show(incorrectInput)
+            }
+            else {
+                this.createArticle()
+            }
+        },
         async createArticle() {
             const newArticle = await fetch("http://localhost:3000/articles/create", {
                 method: "POST",

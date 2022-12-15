@@ -37,9 +37,6 @@
       <div class="flex-shrink-0">
         <a>
           <span class="sr-only">{{ post.user_name }}</span>
-          <img class="h-10 w-10 rounded-full"
-            src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-            alt="" />
           <avatar :userName="post.user_name" />
         </a>
       </div>
@@ -92,9 +89,30 @@ export default {
       const res = await deleteArticle.json()
       console.log(res)
     },
+    timeSince(date) {
+      let seconds = Math.floor((+new Date() - +date) / 1000);
+
+      let interval = seconds / 31536000;
+
+      if (interval > 1) {
+        return Math.floor(interval) + ' years ago';
+      }
+      interval = seconds / 2592000;
+      if (interval > 1) {
+        return Math.floor(interval) + ' months ago';
+      }
+      interval = seconds / 86400;
+      if (interval >= 2) {
+        return Math.floor(interval) + ' days ago';
+      } else if (interval > 1 && interval < 2) {
+        return '1 day ago';
+      }
+      return 'Today';
+    },
+
     formattedDate(date) {
 
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`;
     }
 
   },

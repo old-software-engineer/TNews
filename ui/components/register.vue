@@ -68,21 +68,24 @@ export default {
   },
   methods: {
     validateForm() {
-
+      let incorrectInput = '';
       if (this.name.length < 5) {
-        toaster.show(`Name should be atleast six letters long!`);
+        incorrectInput += "Name should be atleast six letters long!.\n"
       }
-      else if (this.password < 6) {
-        toaster.show("Password should be atleat 6 characters!")
+      if (this.password < 6) {
+        incorrectInput += "Password should be atleat 6 characters!\n"
       }
-      else if (this.password != this.confirmPassword) {
-        toaster.show("Password does not match!")
+      if (this.password != this.confirmPassword) {
+        incorrectInput += "Password does not match!\n"
+        toaster.show(incorrectInput)
       }
       else {
         this.createUser()
       }
+
     },
     createUser() {
+
       axios.post('http://localhost:3000/user/register',
         {
           name: this.name,
@@ -92,8 +95,10 @@ export default {
       ).then(res => {
         console.log(res);
         this.$router.push('/login')
-      })
+      }).catch(e => toaster.show("User already exists!"))
     }
+
+
   },
 
 }

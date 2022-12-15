@@ -18,8 +18,8 @@
                 type="email" placeholder="Enter Email" />
             </div>
             <div class="flex justify-end">
-              <span @click="editProfile" href="#"
-                class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800">Save</span>
+              <span @click="validateForm()" href="#"
+                :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2', name && email ? 'hover:bg-gray-800' : '']">Save</span>
             </div>
           </div>
         </div>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({ /* options */ });
 export default {
   data() {
     return {
@@ -37,11 +39,19 @@ export default {
     };
   },
   methods: {
+    validateForm() {
+      if (this.name.length < 5) {
+        toaster.show(`Name should be atleast six letters long!`);
+      } else {
+        this.editProfile()
+      }
+    },
     async editProfile() {
       const user = await fetch("http://localhost:3000/user/update",
         {
           method: "PUT",
           headers: {
+            "content-type": "application/json",
             "Authorization": localStorage.token
           },
           body: JSON.stringify({
@@ -49,10 +59,14 @@ export default {
             email: this.email
           })
         })
-      const res = await user.json()
-      console.log(res)
-      this.setUser(res.user);
-      this.$router.push('/')
+      const res = await user
+      if (res.status == 401) {
+        toaster.show('Email already exists!')
+      }
+      else {
+        const response = await res.json()
+        toaster.show(response.status)
+      }
     }
   }
 }

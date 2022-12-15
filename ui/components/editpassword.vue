@@ -22,7 +22,7 @@
                                 class="border border-gray-300   rounded-r px-4 py-2 w-full" type="password" />
                         </div>
                         <div class="flex justify-end">
-                            <a href="#" @click="validateForm"
+                            <a href="#" @click="validateForm()"
                                 class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800">Save</a>
                         </div>
                     </div>
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({ /* options */ });
 export default {
     data() {
         return {
@@ -43,24 +45,41 @@ export default {
     },
     methods: {
         validateForm() {
-            this.updatePassword()
+            let incorrectInput = '';
+            if (this.newPassword.length < 6) {
+                incorrectInput += "Password should be atleast six letters long!. "
+            }
+            if (this.newPassword != this.confirmPassword) {
+                incorrectInput += 'Confirm password doesnot match'
+                toaster.show(incorrectInput)
+            } else {
+                this.updatePassword()
+            }
         },
         async updatePassword() {
+
             const user = await fetch("http://localhost:3000/user/update-password",
                 {
                     method: "PUT",
                     headers: {
+                        "content-type": "application/json",
                         "Authorization": localStorage.token
                     },
                     body: JSON.stringify({
-                        oldPassword: this.oldPassword,
-                        newPassword: this.newPassword
+                        old_password: this.oldPassword,
+                        new_password: this.newPassword
                     })
                 })
-            const res = await user.json()
-            console.log(res)
-            this.$router.push('/')
+            const res = await user
+            if (res.status == 401) {
+                toaster.show('Old password is incorrect!')
+            }
+            else {
+                const response = await res.json()
+                toaster.show(response.status)
+            }
         }
+
     }
 }
 </script>
