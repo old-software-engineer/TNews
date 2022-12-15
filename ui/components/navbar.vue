@@ -12,8 +12,7 @@
         </div>
         <div class="flex flex-1 items-center justify-center sm:justify-start">
           <div class="flex flex-shrink-0 items-center">
-            <img class="hidden h-8 w-auto lg:block"
-              src="../assets/logo/tnews-logo.svg" alt="Your Company" />
+            <img class="hidden h-8 w-auto lg:block" src="../assets/logo/tnews-logo.svg" alt="Your Company" />
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
@@ -46,10 +45,18 @@
                   Profile</NuxtLink>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                <NuxtLink href="/editpassword" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Edit Password</NuxtLink>
+                <NuxtLink href="/editpassword"
+                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Edit Password
+                </NuxtLink>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out</a>
+                <NuxtLink href="/createcategory"
+                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Create Category
+                </NuxtLink>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <span @click="signout"
+                  :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out</span>
                 </MenuItem>
               </MenuItems>
             </transition>
@@ -79,7 +86,25 @@ const navigation = [
 </script>
 
 <script>
+import { mapActions, storeToRefs } from "pinia";
+import { userStore } from "../store/user"
+const main = userStore();
+const { user } = storeToRefs(main);
+const { setUser } = mapActions(userStore, ["setUser"])
 export default {
+  data() {
+    return {
+      setUser: setUser
+    }
+  },
+  methods: {
+    signout() {
+      console.log("signout clicked")
+      this.setUser(null);
+      localStorage.clear();
+      this.$router.push('/login')
+    }
+  },
   props: ['path'],
 }
 </script>

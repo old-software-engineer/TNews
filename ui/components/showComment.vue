@@ -6,12 +6,12 @@
         <div class="w-full">
             <div class="flex justify-between align-middle">
                 <div><a href="#" rel="author" class="font-bold text-lg text-gray-900 dark:text-white">{{
-                        comment.name
+                        comment.user_name
                 }} <span class='ml-2 text-base text-gray-500'>says</span> </a></div>
-                <div class="text-sm text-gray-500 mr-6 flex items-center"><time>{{ comment.date }}</time></div>
+                <div class="text-sm text-gray-500 mr-6 flex items-center"><time>{{ comment.created_at }}</time></div>
             </div>
             <div class="mt-3">
-                <p class="lead mt-3 text-base text-gray-500">{{ comment.message }}</p>
+                <p class="lead mt-3 text-base text-gray-500">{{ comment.comment }}</p>
             </div>
         </div>
     </div>
