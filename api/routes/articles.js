@@ -13,13 +13,13 @@ router.get(
 
 router.get("/category/:id", articleController.getByCategoryId);
 
-router.get("/:id", articleController.getByArticleId);
-
 router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
   articleController.create
 );
+
+router.post("/details/:id", articleController.getByArticleId);
 
 router.put(
   "/update",
