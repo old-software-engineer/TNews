@@ -17,7 +17,7 @@ function handleErrors(req) {
       reject({
         message: "Name must be longer than 6 characters",
       });
-    } else if (req.body.password.length < 6) {
+    } else if (req.body?.password.length < 6) {
       reject({
         message: "Password must be longer than 6 characters",
       });
@@ -64,7 +64,6 @@ const updateUser = async (req, res) => {
     return helper.handleResponse(res, 401, "User already exists");
   } else {
     try {
-      handleErrors(req);
       const { id } = req.user;
       const { name, email } = req.body;
       await userService.update(id, { name, email });
@@ -84,7 +83,7 @@ const updatePassword = async (req, res, next) => {
       const salt = bcrypt.genSaltSync();
       const hash = bcrypt.hashSync(new_password, salt);
       await userService.updatePassword(id, hash);
-      helper.handleResponse(res, 500, "Password has been updated");
+      helper.handleResponse(res, 200, "Password has been updated");
     } else {
       helper.handleResponse(res, 401, "Old password is incorrect");
     }

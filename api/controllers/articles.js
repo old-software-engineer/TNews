@@ -4,7 +4,8 @@ const helper = require("../utils/common");
 
 const getAll = async (req, res, next) => {
   try {
-    const articles = await articleService.getAll();
+    const dateOrder = req.query.date_order || "asc";
+    const articles = await articleService.getAll(dateOrder);
     helper.handleResponseWithData(res, 201, articles);
   } catch (error) {
     helper.handleResponse(res, 500, error);

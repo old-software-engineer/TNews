@@ -1,7 +1,7 @@
 const knex = require("../db");
 
 module.exports = articleService = {
-  getAll: async () => {
+  getAll: async (dateOrder) => {
     const articles = await knex("articles")
       .join("users", "users.id", "articles.user_id")
       .join("categories", "categories.id", "articles.category_id")
@@ -11,6 +11,7 @@ module.exports = articleService = {
         "users.email",
         "categories.name as category_name"
       )
+      .orderBy("created_at", dateOrder)
       .where({ public_access: true });
     return articles;
   },
