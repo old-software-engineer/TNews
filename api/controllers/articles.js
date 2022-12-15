@@ -14,7 +14,8 @@ const getAll = async (req, res, next) => {
 
 const getByUserId = async (req, res, next) => {
   try {
-    const articles = await articleService.getByUserId(req.user.id);
+    const dateOrder = req.query.date_order || "asc";
+    const articles = await articleService.getByUserId(req.user.id, dateOrder);
     helper.handleResponseWithData(res, 201, articles);
   } catch (error) {
     helper.handleResponse(res, 500, error);
@@ -23,7 +24,11 @@ const getByUserId = async (req, res, next) => {
 
 const getByCategoryId = async (req, res, next) => {
   try {
-    const articles = await articleService.getByCategoryId(req.params.id);
+    const dateOrder = req.query.date_order || "asc";
+    const articles = await articleService.getByCategoryId(
+      req.params.id,
+      dateOrder
+    );
     helper.handleResponseWithData(res, 201, articles);
   } catch (error) {
     helper.handleResponse(res, 500, error);
