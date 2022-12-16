@@ -56,8 +56,7 @@ export default {
                     })
                 })
             const res = await category.json()
-            console.log(res)
-            this.$router.push('/categories')
+            navigateTo('/categories')
         }
     }
 }

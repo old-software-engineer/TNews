@@ -6,7 +6,7 @@
                     <h2 class="mt-6 mb-9 text-3xl font-bold tracking-tight text-gray-900">
                         Create New Article
                     </h2>
-                    <form @submit.prevent="validateForm()">
+                    <form @submit.prevent="validateForm">
                         <div class="shadow sm:rounded-md  sm:overflow-hidden">
                             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                 <div class="grid grid-cols-3 gap-6">
@@ -106,8 +106,7 @@ export default {
                 })
             })
             const res = await newArticle.json()
-            console.log(res)
-            this.$router.push('/myarticles')
+            navigateTo('/myarticles')
         },
         async getCategories() {
             const categories = await fetch("http://localhost:3000/categories/all");

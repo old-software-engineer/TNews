@@ -42,7 +42,7 @@
       </div>
       <div class="ml-3">
         <p class="text-sm font-medium text-gray-900">
-          <a href="#">{{ post.user_name }}</a>
+          <a>{{ post.user_name }}</a>
         </p>
         <div class="flex space-x-1 text-sm text-gray-500">
           <time>{{ formattedDate(new Date(post.created_at)) }}</time>
@@ -72,11 +72,11 @@ export default {
   },
   methods: {
     showArticle() {
-      this.$router.push(`/articles/${this.post.id}`)
+      navigateTo(`/articles/${this.post.id}`)
     },
     editArticle() {
       console.log("Inside Edit Article")
-      this.$router.push(`/editarticle/${this.post.id}`)
+      navigateTo(`/editarticle/${this.post.id}`)
     },
     async deleteArticle() {
       const deleteArticle = await fetch(`http://localhost:3000/articles/delete/${this.post.id}`, {

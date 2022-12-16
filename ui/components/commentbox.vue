@@ -4,11 +4,11 @@
       <Avatar :userName="userName" />
     </div>
     <div class="min-w-0 flex-1">
-      <form @submit.prevent="createComment">
+      <form ref="form" @submit.prevent="createComment">
         <div class="border-b border-gray-200 focus-within:border-indigo-600">
           <label for="comment" class="sr-only">Add your comment</label>
-          <textarea rows="3" name="comment" id="comment" v-model="comment"
-            class="block w-full resize-none border-0 border-b border-transparent p-0 pb-2  lead mt-3 text-base text-gray-500 focus:ring-0 sm:text-sm"
+          <textarea rows="3" name="comment" id="comment" v-model="comment" required
+            class="block p-2 w-full resize-none border-0 border-b border-transparent  pb-2  lead mt-3 text-base text-gray-500 focus:ring-0 sm:text-sm"
             placeholder="Add your comment..." />
         </div>
         <div class="flex justify-end pt-2">
@@ -41,9 +41,10 @@ export default {
         })
       })
       const res = await comment.json()
-      console.log(res)
+      this.getArticle()
+      this.$refs.form.reset()
     }
   },
-  props: ['article_id', 'user_id', 'userName']
+  props: ['article_id', 'user_id', 'userName', 'getArticle']
 }
 </script>

@@ -22,7 +22,7 @@
                                 class="border border-gray-300   rounded-r px-4 py-2 w-full" type="password" />
                         </div>
                         <div class="flex justify-end">
-                            <a href="#" @click="validateForm()"
+                            <a href="#" @click="validateForm"
                                 class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800">Save</a>
                         </div>
                     </div>

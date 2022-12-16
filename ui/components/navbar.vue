@@ -85,22 +85,17 @@ const navigation = [
 
 <script>
 import { mapActions, storeToRefs } from "pinia";
-import { userStore } from "../store/user"
-const main = userStore();
-const { user } = storeToRefs(main);
-const { setUser } = mapActions(userStore, ["setUser"])
+
 export default {
   data() {
     return {
-      setUser: setUser
     }
   },
   methods: {
     signout() {
       console.log("signout clicked")
-      this.setUser(null);
       localStorage.clear();
-      this.$router.push('/login')
+      navigateTo('/login')
     }
   },
   props: ['path'],

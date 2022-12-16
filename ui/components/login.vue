@@ -46,11 +46,8 @@
 </template>
 
 <script>
+import { useAuthStore } from "~~/store";
 import { mapActions, storeToRefs } from "pinia";
-import { userStore } from "../store/user"
-const main = userStore();
-const { user } = storeToRefs(main);
-const { setUser } = mapActions(userStore, ["setUser"])
 import { createToaster } from "@meforma/vue-toaster";
 const toaster = createToaster({ /* options */ });
 export default {
@@ -58,33 +55,13 @@ export default {
     return {
       email: '',
       password: '',
-      user: user,
-      setUser: setUser
     };
   },
 
   methods: {
     async loginUser() {
-      const user = await fetch("http://localhost:3000/user/login",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password
-          })
-        })
-      try {
-        const res = await user.json()
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.user))
-        this.setUser(res.user);
-        this.$router.push('/')
-      } catch (e) {
-        toaster.show("Invalid Email or Password")
-      }
+      const authStore = useAuthStore();
+      return authStore.login(this.email, this.password).catch(error => toaster.show(error));
     }
   }
 }

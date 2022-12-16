@@ -5,9 +5,6 @@
                 <header class="mb-4 lg:mb-6 not-format">
                     <address class="flex items-center mb-6 not-italic">
                         <div class="w-full  inline-flex items-center mr-3 text-sm text-gray-900">
-                            <!-- <img class="mr-4 w-16 h-16 rounded-full"
-                                src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                                alt="Jese Leos"> -->
                             <div class="mr-4">
                                 <Avatar :userName="user.name" />
                             </div>
@@ -42,7 +39,8 @@
                 </div>
                 <div class="flex flex-col space-y-6">
                     <span class="text-xl font-bold text-gray-900">Leave a Comment</span>
-                    <commentbox :article_id="article.id" :user_id="user.id" :userName="user.name" />
+                    <commentbox :getArticle="getArticle" :article_id="article.id" :user_id="user.id"
+                        :userName="user.name" />
                 </div>
             </article>
         </div>
@@ -51,9 +49,9 @@
 
 <script>
 import { mapActions, storeToRefs } from "pinia";
-import { userStore } from "../store/user"
-const main = userStore();
-const { user } = storeToRefs(main);
+import { useAuthStore } from "~~/store";
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
 export default {
     props: ['articleId'],
     data() {
@@ -83,7 +81,6 @@ export default {
                 })
             });
             this.article = await article.json();
-            console.log(this.article)
             this.reaction = this.article.current_user_reaction
             const comments = await fetch(`http://localhost:3000/comments/article/${this.article.id}`, {
                 headers: {
@@ -107,7 +104,6 @@ export default {
                 }
             )
             const res = await reaction.json()
-            console.log(res)
             this.getArticle();
         },
         timeSince(date) {
@@ -136,7 +132,7 @@ export default {
             return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`;
         }
     },
-    mounted() {
+    created() {
         this.getArticle();
     }
 }

@@ -17,7 +17,6 @@ export default {
         async getArticles() {
             const articles = await fetch("http://localhost:3000/articles/all");
             this.articles = await articles.json();
-
         },
     },
     created() {

@@ -1,7 +1,8 @@
 <template>
     <div>
-        <span
-            class="bg-gray-300 flex items-center justify-center rounded-full h-10 w-10 text-gray-900">{{ getInitialLetters(userName) }}</span>
+        <span class="bg-gray-300 flex items-center justify-center rounded-full h-10 w-10 text-gray-900">{{
+                getInitialLetters(userName)
+        }}</span>
     </div>
 </template>
 

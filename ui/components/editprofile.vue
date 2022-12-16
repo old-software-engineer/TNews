@@ -18,7 +18,7 @@
                 type="email" placeholder="Enter Email" />
             </div>
             <div class="flex justify-end">
-              <span @click="validateForm()" href="#"
+              <span @click="validateForm" href="#"
                 :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2', name && email ? 'hover:bg-gray-800' : '']">Save</span>
             </div>
           </div>
