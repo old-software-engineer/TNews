@@ -27,7 +27,7 @@ export default {
             this.categories = await categories.json();
         },
         handleClick(categoryName, categoryId) {
-            this.$router.push(`/${categoryName.toLowerCase()}/${categoryId}`)
+            navigateTo(`/${categoryName.toLowerCase()}/${categoryId}`)
         }
     },
     created() {

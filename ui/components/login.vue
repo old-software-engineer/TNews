@@ -31,7 +31,7 @@
           </div>
           <div>
             <button
-              class="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+              :class="['flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm', email && password ? 'hover:bg-gray-800' : '', 'focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2']">
               Sign in
             </button>
           </div>
@@ -46,40 +46,22 @@
 </template>
 
 <script>
+import { useAuthStore } from "~~/store";
 import { mapActions, storeToRefs } from "pinia";
-import { userStore } from "../store/user"
-const main = userStore();
-const { user } = storeToRefs(main);
-const { setUser } = mapActions(userStore, ["setUser"])
-
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({ /* options */ });
 export default {
   data() {
     return {
       email: '',
       password: '',
-      user: user,
-      setUser: setUser
     };
   },
 
   methods: {
     async loginUser() {
-      const user = await fetch("http://localhost:3000/user/login",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password
-          })
-        })
-      const res = await user.json()
-      console.log(res)
-      localStorage.setItem('token', res.token);
-      this.setUser(res.user);
-      this.$router.push('/')
+      const authStore = useAuthStore();
+      return authStore.login(this.email, this.password).catch(error => toaster.show(error));
     }
   }
 }

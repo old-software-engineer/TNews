@@ -13,7 +13,7 @@ export default {
         return {
             category: routeName,
             categoryId: categoryId,
-            categoryArticles: []
+            categoryArticles: [],
 
         }
     },
@@ -25,6 +25,7 @@ export default {
     },
     created() {
         this.getArticlesByCategory();
+        
     }
 }
 </script>   

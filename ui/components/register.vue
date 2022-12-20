@@ -1,14 +1,13 @@
 <template>
   <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <!-- Logo -->
       <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
         Register new account
       </h2>
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form @submit.prevent="validateForm()" class="space-y-6" action="#" method="POST">
+        <form @submit.prevent="validateForm" class="space-y-6" action="#" method="POST">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <div class="mt-1">
@@ -68,21 +67,24 @@ export default {
   },
   methods: {
     validateForm() {
-
+      let incorrectInput = '';
       if (this.name.length < 5) {
-        toaster.show(`Name should be atleast six letters long!`);
+        incorrectInput += "Name should be atleast six letters long!.\n"
       }
-      else if (this.password < 6) {
-        toaster.show("Password should be atleat 6 characters!")
+      if (this.password < 6) {
+        incorrectInput += "Password should be atleat 6 characters!\n"
       }
-      else if (this.password != this.confirmPassword) {
-        toaster.show("Password does not match!")
+      if (this.password != this.confirmPassword) {
+        incorrectInput += "Password does not match!\n"
+        toaster.show(incorrectInput)
       }
       else {
         this.createUser()
       }
+
     },
     createUser() {
+
       axios.post('http://localhost:3000/user/register',
         {
           name: this.name,
@@ -90,10 +92,11 @@ export default {
           password: this.password
         }
       ).then(res => {
-        console.log(res);
-        this.$router.push('/login')
-      })
+        navigateTo('/login')
+      }).catch(e => toaster.show("User already exists!"))
     }
+
+
   },
 
 }
