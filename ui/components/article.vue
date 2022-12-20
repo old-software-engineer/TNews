@@ -69,6 +69,7 @@ export default {
     }
   },
   data () {
+    const config = useRuntimeConfig()
     const route = useRoute()
     const routeName = route.path
     const article = {}
@@ -79,7 +80,8 @@ export default {
       article,
       user,
       comments,
-      reaction: ''
+      reaction: '',
+      config
     }
   },
   watch: {
@@ -92,7 +94,7 @@ export default {
   },
   methods: {
     async getArticle () {
-      const article = await fetch(`http://localhost:3000/articles/details/${this.articleId}`, {
+      const article = await fetch(`${this.config.public.baseUrl}/articles/details/${this.articleId}`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -103,7 +105,7 @@ export default {
       })
       this.article = await article.json()
       this.reaction = this.article.current_user_reaction
-      const comments = await fetch(`http://localhost:3000/comments/article/${this.article.id}`, {
+      const comments = await fetch(`${this.config.public.baseUrl}/comments/article/${this.article.id}`, {
         headers: {
           'content-type': 'application/json'
         }
@@ -111,7 +113,7 @@ export default {
       this.comments = await comments.json()
     },
     async changeReaction () {
-      await fetch('http://localhost:3000/reactions/change-reaction',
+      await fetch(`${this.config.public.baseUrl}/reactions/change-reaction`,
         {
           method: 'POST',
           headers: {

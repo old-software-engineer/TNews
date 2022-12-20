@@ -5,13 +5,14 @@
 </template>
 
 <script>
-
 export default {
   data () {
+    const config = useRuntimeConfig()
     const heading = 'All publications'
     return {
       articles: [],
-      heading
+      heading,
+      config
     }
   },
   created () {
@@ -19,12 +20,12 @@ export default {
   },
   methods: {
     async getArticles () {
-      const articles = await fetch('http://localhost:3000/articles/all')
+      const articles = await fetch(`${this.config.public.baseUrl}/articles/all`)
       this.articles = await articles.json()
     },
 
     async getSortedArticles (type) {
-      const article = await fetch('http://localhost:3000/articles/all?' + new URLSearchParams({ date_order: type }))
+      const article = await fetch(`${this.config.public.baseUrl}/articles/all?` + new URLSearchParams({ date_order: type }))
       this.articles = await article.json()
     }
 

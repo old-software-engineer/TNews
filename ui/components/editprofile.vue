@@ -54,10 +54,12 @@ const toaster = createToaster({
 const { setUser } = mapActions(useAuthStore, ['setUser'])
 export default {
   data () {
+    const config = useRuntimeConfig()
     return {
       name: '',
       email: '',
-      setUser
+      setUser,
+      config
     }
   },
   methods: {
@@ -69,7 +71,7 @@ export default {
       }
     },
     async editProfile () {
-      const user = await fetch('http://localhost:3000/user/update',
+      const user = await fetch(`${this.config.public.baseUrl}/user/update`,
         {
           method: 'PUT',
           headers: {

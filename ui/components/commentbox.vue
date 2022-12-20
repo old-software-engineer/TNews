@@ -62,8 +62,10 @@ export default {
     }
   },
   data () {
+    const config = useRuntimeConfig()
     return {
-      comment: ''
+      comment: '',
+      config
     }
   },
   methods: {
@@ -71,7 +73,7 @@ export default {
       if (this.comment.trim() === '') {
         toaster.show('Enter a comment')
       } else {
-        await fetch('http://localhost:3000/comments/create', {
+        await fetch(`${this.config.public.baseUrl}/comments/create`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json'

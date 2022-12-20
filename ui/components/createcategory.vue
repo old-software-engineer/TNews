@@ -50,8 +50,10 @@ const toaster = createToaster({
 })
 export default {
   data () {
+    const config = useRuntimeConfig()
     return {
-      category: ''
+      category: '',
+      config
     }
   },
   methods: {
@@ -61,7 +63,7 @@ export default {
       } else if (this.category.trim() === '') {
         toaster.show('Enter Category Title')
       } else {
-        await fetch('http://localhost:3000/categories/create',
+        await fetch(`${this.config.public.baseUrl}/categories/create`,
           {
             method: 'POST',
             headers: {

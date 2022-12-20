@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarStartupnavbar />
+    <Startupnavbar />
     <Login />
     <Footer />
   </div>
@@ -8,6 +8,6 @@
 
 <script setup>
 definePageMeta({
-  layout: false,
-});
+  layout: false
+})
 </script>

@@ -54,10 +54,12 @@ const toaster = createToaster({
 })
 export default {
   data () {
+    const config = useRuntimeConfig()
     return {
       oldPassword: '',
       newPassword: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      config
     }
   },
   methods: {
@@ -74,7 +76,7 @@ export default {
       }
     },
     async updatePassword () {
-      const user = await fetch('http://localhost:3000/user/update-password',
+      const user = await fetch(`${this.config.public.baseUrl}/user/update-password`,
         {
           method: 'PUT',
           headers: {

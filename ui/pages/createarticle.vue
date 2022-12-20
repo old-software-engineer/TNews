@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <Createarticle />
-    </div>
+  <div>
+    <Createarticle />
+  </div>
 </template>
 
 <script>

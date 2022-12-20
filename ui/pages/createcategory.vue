@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <Createcategory />
-    </div>
+  <div>
+    <Createcategory />
+  </div>
 </template>
 
 <script>

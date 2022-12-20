@@ -27,10 +27,10 @@
             >
               <div class="py-1">
                 <MenuItem>
-                  <span class="text-gray-500 block px-4 py-2 text-sm" @click="editArticle">Edit Article</span>
+                  <span class="text-gray-500 block px-4 py-2 text-sm cursor-pointer" @click="editArticle">Edit Article</span>
                 </MenuItem>
                 <MenuItem>
-                  <span class="text-gray-500 block px-4 py-2 text-sm" @click="deleteArticle">Delete Article</span>
+                  <span class="text-gray-500 block px-4 py-2 text-sm cursor-pointer" @click="deleteArticle">Delete Article</span>
                 </MenuItem>
               </div>
             </MenuItems>
@@ -82,13 +82,21 @@ export default defineComponent({
       default () {
         return {}
       }
+    },
+    getArticles: {
+      type: Function,
+      default () {
+        return () => {}
+      }
     }
   },
   data () {
+    const config = useRuntimeConfig()
     const route = useRoute()
     const routeName = route.path
     return {
-      path: routeName
+      path: routeName,
+      config
     }
   },
   methods: {
@@ -99,13 +107,14 @@ export default defineComponent({
       navigateTo(`/editarticle/${this.post.id}`)
     },
     async deleteArticle () {
-      await fetch(`http://localhost:3000/articles/delete/${this.post.id}`, {
+      await fetch(`${this.config.public.baseUrl}/articles/delete/${this.post.id}`, {
         method: 'DELETE',
         headers: {
           'content-type': 'application/json',
           Authorization: localStorage.token
         }
       })
+      this.getArticles()
     },
     timeSince (date:Date) {
       const seconds = Math.floor((+new Date() - +date) / 1000)

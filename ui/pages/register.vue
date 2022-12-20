@@ -1,13 +1,13 @@
 <template>
   <div>
-    <NavbarStartupnavbar />
+    <Startupnavbar />
     <Register />
     <Footer />
   </div>
 </template>
-  
+
 <script setup>
 definePageMeta({
-  layout: false,
-});
+  layout: false
+})
 </script>

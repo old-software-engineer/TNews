@@ -7,44 +7,69 @@
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form @submit.prevent="validateForm" class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" action="#" method="POST" @submit.prevent="validateForm">
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
             <div class="mt-1">
-              <input id="userName" type="text" v-model="name" required
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm" />
+              <input
+                id="userName"
+                v-model="name"
+                type="text"
+                required
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+              >
             </div>
           </div>
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
             <div class="mt-1">
-              <input id="email" type="email" autocomplete="email" required v-model="email"
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm" />
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+              >
             </div>
           </div>
           <div>
             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
             <div class="mt-1">
-              <input id="password" type="password" autocomplete="current-password" required v-model="password"
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm" />
+              <input
+                id="password"
+                v-model="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+              >
             </div>
           </div>
           <div>
             <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
             <div class="mt-1">
-              <input id="pconfirmPassword" type="password" autocomplete="current-password" required
+              <input
+                id="pconfirmPassword"
                 v-model="confirmPassword"
-                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm" />
+                type="password"
+                autocomplete="current-password"
+                required
+                class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+              >
             </div>
           </div>
           <div>
             <button
-              class="flex w-full justify-center rounded-md border border-transparent  bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-              Sign in
+              class="flex w-full justify-center rounded-md border border-transparent  bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            >
+              Sign Up
             </button>
           </div>
           <div class="mt-8 text-center">
-            <NuxtLink to="/login" class="font-medium text-gray-800 hover:text-gray-500">Login here</NuxtLink>
+            <NuxtLink to="/login" class="font-medium text-gray-800 hover:text-gray-500">
+              Login here
+            </NuxtLink>
           </div>
         </form>
       </div>
@@ -53,51 +78,52 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { createToaster } from "@meforma/vue-toaster";
-const toaster = createToaster({ /* options */ });
+import axios from 'axios'
+import { createToaster } from '@meforma/vue-toaster'
+const toaster = createToaster({
+  type: 'warning',
+  position: 'top-right'
+})
 export default {
-  data() {
+  data () {
+    const config = useRuntimeConfig()
     return {
       name: '',
       email: '',
       password: '',
       confirmPassword: '',
-    };
+      config
+    }
   },
   methods: {
-    validateForm() {
-      let incorrectInput = '';
-      if (this.name.length < 5) {
-        incorrectInput += "Name should be atleast six letters long!.\n"
-      }
-      if (this.password < 6) {
-        incorrectInput += "Password should be atleat 6 characters!\n"
-      }
-      if (this.password != this.confirmPassword) {
-        incorrectInput += "Password does not match!\n"
+    validateForm () {
+      let incorrectInput = ''
+      if (this.name.length < 5 || this.name.trim() === '') {
+        incorrectInput += 'Name should be atleast six letters long!.\n'
         toaster.show(incorrectInput)
-      }
-      else {
+      } else if (this.password < 6 || this.password.trim() === '') {
+        incorrectInput += 'Password should be atleat 6 characters!\n'
+        toaster.show(incorrectInput)
+      } else if (this.password !== this.confirmPassword) {
+        incorrectInput += 'Password does not match!\n'
+        toaster.show(incorrectInput)
+      } else {
         this.createUser()
       }
-
     },
-    createUser() {
-
-      axios.post('http://localhost:3000/user/register',
+    createUser () {
+      axios.post(`${this.config.public.baseUrl}/user/register`,
         {
           name: this.name,
           email: this.email,
           password: this.password
         }
-      ).then(res => {
+      ).then(() => {
         navigateTo('/login')
-      }).catch(e => toaster.show("User already exists!"))
+      }).catch(() => toaster.show('User already exists!'))
     }
 
-
-  },
+  }
 
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <Editprofile />
-    </div>
+  <div>
+    <Editprofile />
+  </div>
 </template>
 
 <script>

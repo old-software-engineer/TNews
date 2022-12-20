@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <Editpassword />
-    </div>
+  <div>
+    <Editpassword />
+  </div>
 </template>
 
 <script>

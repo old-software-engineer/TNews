@@ -95,13 +95,15 @@ const toaster = createToaster({
 })
 export default {
   data () {
+    const config = useRuntimeConfig()
     return {
       categories: [],
       newArticel: {},
       title: '',
       description: '',
       public_access: '',
-      category_id: ''
+      category_id: '',
+      config
     }
   },
   created () {
@@ -121,7 +123,7 @@ export default {
       }
     },
     async createArticle () {
-      await fetch('http://localhost:3000/articles/create', {
+      await fetch(`${this.config.public.baseUrl}/articles/create`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -137,10 +139,9 @@ export default {
       navigateTo('/myarticles')
     },
     async getCategories () {
-      const categories = await fetch('http://localhost:3000/categories/all')
+      const categories = await fetch(`${this.config.public.baseUrl}/categories/all`)
       this.categories = await categories.json()
     }
   }
-
 }
 </script>

@@ -1,37 +1,39 @@
 <template>
-    <div>
-        <Navbar :path="path" />
-        <div class="mt-10">
-            <slot />
-        </div>
-        <Footer />
+  <div>
+    <Navbar :path="path" />
+    <div class="mt-10">
+      <slot />
     </div>
-
+    <Footer />
+  </div>
 </template>
-        
 
 <script>
-import { createToaster } from "@meforma/vue-toaster";
-const toaster = createToaster({ /* options */ });
-import { mapActions, storeToRefs } from "pinia";
-
-
+import { storeToRefs, mapActions } from 'pinia'
+import { useAuthStore } from '~~/store'
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
+const { setUser } = mapActions(useAuthStore, ['setUser'])
 export default {
-
-    watch: {
-        $route(newPath, oldPath) {
-            this.path = newPath.fullPath
-        },
-    },
-    data() {
-        const route = useRoute()
-        const routeName = route.path
-        return {
-            path: routeName,
-        }
+  data () {
+    const route = useRoute()
+    const routeName = route.path
+    return {
+      path: routeName,
+      user,
+      setUser
     }
+  },
+
+  watch: {
+    $route (newPath) {
+      this.path = newPath.fullPath
+    }
+  },
+  mounted () {
+    if (!this.user) {
+      localStorage.getItem('user') ? this.setUser(JSON.parse(localStorage.getItem('user'))) : navigateTo('/login')
+    }
+  }
 }
 </script>
-
-
-
