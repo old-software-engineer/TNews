@@ -1,8 +1,31 @@
 # Description
 
-This is news website prototype created with node js in the backend and nuxt 3 in the frontend. Here we can create the news article and user can see it on the public dashboard. Also, he can like and comment on that article.
+It is a news website prototype which is built on node js and nuxt 3. Here user can create his account, create news articles, post reactions and comments on the articles.
 
 # Screenshots
+
+- Register new user
+![Register new user](https://user-images.githubusercontent.com/15182066/208686016-7fa577ca-cce1-4e4b-8b02-45aa900c605b.png)
+- User login
+![User login](https://user-images.githubusercontent.com/15182066/208686009-a30506a3-b538-4432-905b-a044fb0c6b31.png)
+- Create new article
+![Create new article](https://user-images.githubusercontent.com/15182066/208686031-634340af-c6a2-443c-9b06-694d039f661a.png)
+- Dashboard with all users' articles
+![All publications](https://user-images.githubusercontent.com/15182066/208686019-607083ae-7484-4cf9-8de6-9380aa1e355f.png)
+- User specific articles with public and private types
+![User specific articles](https://user-images.githubusercontent.com/15182066/208686034-90fd287b-7c5e-47cb-8947-d5bad0bacd9c.png)
+- Article detail page with likes and comments
+![Article detail page](https://user-images.githubusercontent.com/15182066/208686041-951d8850-6464-49d7-a202-e126191bb1e7.png)
+- Create new category
+![Create new category](https://user-images.githubusercontent.com/15182066/208686051-930849ac-9cd4-4e8a-b3c9-c57aa8a3229a.png)
+- All categories
+![All categories](https://user-images.githubusercontent.com/15182066/208686046-9f22a2eb-4b94-4272-9579-4e3f6ad5467f.png)
+- Articles of specific category
+![Articles of specific category](https://user-images.githubusercontent.com/15182066/208686065-0d6f1d6c-570d-49f3-8ef7-db19034b985a.png)
+- Edit profile
+![Edit profile](https://user-images.githubusercontent.com/15182066/208686059-ebedfe50-9d3e-46dd-910f-3513408da7b7.png)
+- Edit password
+![Edit password](https://user-images.githubusercontent.com/15182066/208686062-da2c9781-e10c-4b62-9aa0-ceacbcaf4faf.png)
 
 # About
 
@@ -73,6 +96,8 @@ You can check the results on [http://localhost:3001](http://localhost:3001).
 
 # Tech Stack
 
-**Client:** Nuxt 3, Pinia, TailwindCSS
+**Client:** Nuxt 3, Typescript, Pinia, TailwindCSS
 
 **Server:** Node, Express, Knex, PostgreSQL, PassportJS, JWT, Bcrypt
+
+**Formatting and Linting:** ESLint, Prettier
