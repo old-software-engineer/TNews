@@ -90,9 +90,25 @@ You can check the results on [http://localhost:3001](http://localhost:3001).
 
 # Concepts
 
-- Used Knex ORM to create queries with postgreSQL and migrations for the database schemas
+### Knex ORM
+- Knex.js is a SQL Query Builder for JavaScript.
+- It is used to create queries with postgreSQL and migrations for the database schemas
+
+### Passport JS
+- Passport is Express-compatible authentication middleware for Node.js.
+- Passport's sole purpose is to authenticate requests, which it does through an extensible set of plugins known as strategies.
 - Implemented the Passport js authentication with local strategy at login and jwt strategy at updating user and articles
-- Used JWT and Bcrypt for the user authentication
+
+### JWT
+- A JSON web token(JWT) is JSON Object which is used to securely transfer information over the web(between two parties). 
+- It is used for an authentication system and also used for information exchange.
+
+### Bcrypt
+- The bcrypt hashing function allows us to build a password security platform that scales with computation power
+- It is used to hash the user's password with a salt.
+
+### ESLint
+- This helped in catching errors during development, keep a consistent code style, and avoid formatting creating large diffs in pull requests.
 
 # Tech Stack
 
