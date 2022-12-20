@@ -29,7 +29,7 @@ module.exports = articleService = {
       .where({ category_id, public_access: true });
     return articles;
   },
-  getByUserId: async (id, dateOrder) => {
+  getByUserId: async (id, dateOrder, publicAccess) => {
     const articles = await knex("articles")
       .join("users", "users.id", "articles.user_id")
       .join("categories", "categories.id", "articles.category_id")
@@ -40,7 +40,8 @@ module.exports = articleService = {
         "categories.name as category_name"
       )
       .orderBy("created_at", dateOrder)
-      .where("users.id", id);
+      .where("users.id", id)
+      .where("public_access", publicAccess);
     return articles;
   },
   checkUserArticle: async (article_id, user_id) => {

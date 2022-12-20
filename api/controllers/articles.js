@@ -15,7 +15,12 @@ const getAll = async (req, res, next) => {
 const getByUserId = async (req, res, next) => {
   try {
     const dateOrder = req.query.date_order || "asc";
-    const articles = await articleService.getByUserId(req.user.id, dateOrder);
+    const accessType = req.query.access_type === "public" ? true : false;
+    const articles = await articleService.getByUserId(
+      req.user.id,
+      dateOrder,
+      accessType
+    );
     helper.handleResponseWithData(res, 201, articles);
   } catch (error) {
     helper.handleResponse(res, 500, error);
