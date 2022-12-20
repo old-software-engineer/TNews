@@ -98,7 +98,7 @@ export default {
   methods: {
     validateForm () {
       let incorrectInput = ''
-      if (this.name.length < 5 || this.name.trim() === '') {
+      if (this.name.length < 7 || this.name.trim() === '') {
         incorrectInput += 'Name should be atleast six letters long!.\n'
         toaster.show(incorrectInput)
       } else if (this.password < 6 || this.password.trim() === '') {
@@ -120,7 +120,7 @@ export default {
         }
       ).then(() => {
         navigateTo('/login')
-      }).catch(() => toaster.show('User already exists!'))
+      }).catch(e => toaster.show(e))
     }
 
   }

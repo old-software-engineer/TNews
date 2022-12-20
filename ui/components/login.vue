@@ -34,7 +34,7 @@
               >
             </div>
           </div>
-          <div class="flex items-center justify-between">
+          <!-- <div class="flex items-center justify-between">
             <div class="flex items-center">
               <input
                 id="remember-me"
@@ -44,7 +44,7 @@
               >
               <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
             </div>
-          </div>
+          </div> -->
           <div>
             <button
               :class="['flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm', email && password ? 'hover:bg-gray-800' : '', 'focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2']"
