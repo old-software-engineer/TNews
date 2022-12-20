@@ -35,7 +35,7 @@
             </div>
             <div class="flex justify-end">
               <span
-                class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800"
+                class="-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800 cursor-pointer"
                 @click="validateForm"
               >Save</span>
             </div>

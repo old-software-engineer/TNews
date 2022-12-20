@@ -1,9 +1,18 @@
 <template>
   <div>
-    <div class="mt-12 text-center">
+    <div class="relative mt-12 items-center justify-center flex flex-row  text-center">
       <h2 class="text-3xl capitalize font-bold tracking-tight text-gray-900 sm:text-4xl">
         {{ heading }}
       </h2>
+
+      <div class="flex justify-end right-32 absolute">
+        <NuxtLink
+          href="/createarticle"
+          class="flex justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+        >
+          Create New Article
+        </NuxtLink>
+      </div>
     </div>
     <div class="bg-white px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-15 lg:pb-28">
       <div class="relative mx-auto max-w-lg lg:max-w-7xl">
@@ -40,10 +49,10 @@
                       >Public</span>
                     </MenuItem>
                     <MenuItem>
-                      <a
+                      <span
                         class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
                         @click="getSortedArticles('asc','private')"
-                      >Private</a>
+                      >Private</span>
                     </MenuItem>
                   </div>
                 </MenuItems>
@@ -93,8 +102,11 @@
             </Menu>
           </div>
         </div>
-        <div class="grid gap-16 pt-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
-          <ArticleCard v-for="article in articles" :key="article.id" :post="article" :get-articles="getArticles" />
+        <div v-if="articles.length >0" class="grid gap-16 pt-12 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-12">
+          <Articlecard v-for="article in articles" :key="article.id" :post="article" :get-articles="getArticles" />
+        </div>
+        <div v-else class="text-2xl h-80 flex items-center justify-center tracking-tight text-gray-900 sm:text-xl">
+          <span> You have not created any article yet. Please create a new article.</span>
         </div>
       </div>
     </div>
@@ -149,13 +161,6 @@ export default {
   watch: {
     posts () {
       this.articles = this.posts
-    }
-  },
-  created () {
-  },
-  methods: {
-    handleClick (categoryName, categoryId) {
-      navigateTo(`/${categoryName.toLowerCase()}/${categoryId}`)
     }
   }
 }

@@ -29,7 +29,7 @@
               </div>
               <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                 <button
-                  :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2', category ? 'hover:bg-gray-800' : '']"
+                  :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2', category && 'hover:bg-gray-800']"
                 >
                   Save
                 </button>

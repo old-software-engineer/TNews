@@ -100,9 +100,6 @@ export default defineComponent({
     }
   },
   methods: {
-    showArticle () {
-      navigateTo(`/articles/${this.post.id}`)
-    },
     editArticle () {
       navigateTo(`/editarticle/${this.post.id}`)
     },

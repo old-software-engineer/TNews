@@ -10,14 +10,14 @@
               </div>
               <div class="w-full flex justify-between">
                 <div>
-                  <a href="#" rel="author" class="text-xl font-bold text-gray-900">{{
+                  <span href="#" rel="author" class="text-xl font-bold text-gray-900">{{
                     article.title
-                  }}</a>
+                  }}</span>
                   <div class="flex space-x-1 text-sm text-gray-500">
                     <time>{{ formattedDate(new Date(article.created_at)) }}</time>
                   </div>
                 </div>
-                <div class="mr-4">
+                <div class="mr-4 cursor-pointer">
                   <Likebutton :current-user-reaction="reaction" @click="changeReaction" />
                   <span class="flex mt-2 text-sm text-gray-500">Liked by <p
                     class="text-gray-900 font-medium mx-1"
@@ -38,7 +38,7 @@
         </p>
         <div class="my-7">
           <span class="text-xl font-bold text-gray-900">Comments</span>
-          <ShowComment v-for="comment in comments" :key="comment.id" :comment="comment" />
+          <Showcomment v-for="comment in comments" :key="comment.id" :comment="comment" />
         </div>
         <div class="flex flex-col space-y-6">
           <span class="text-xl font-bold text-gray-900">Leave a Comment</span>

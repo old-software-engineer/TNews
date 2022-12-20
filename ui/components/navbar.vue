@@ -12,9 +12,9 @@
           </DisclosureButton>
         </div>
         <div class="flex flex-1 items-center justify-center sm:justify-start">
-          <div class="flex flex-shrink-0 items-center">
+          <NuxtLink href="/" class="flex flex-shrink-0 items-center">
             <img class="hidden h-8 w-auto lg:block" src="../assets/logo/tnews-logo.svg" alt="Your Company">
-          </div>
+          </NuxtLink>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <NuxtLink
@@ -101,18 +101,20 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { storeToRefs } from 'pinia'
+import { storeToRefs, mapActions } from 'pinia'
 import { useAuthStore } from '~~/store'
 </script>
 
 <script>
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
-  { name: 'MyArticles', href: '/myarticles', current: false },
+  { name: 'My Articles', href: '/myarticles', current: false },
   { name: 'Categories', href: '/categories', current: false }
 ]
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
+const { setUser } = mapActions(useAuthStore, ['setUser'])
+
 export default {
   props: {
     path: {
@@ -124,11 +126,13 @@ export default {
   },
   data () {
     return {
-      user
+      user,
+      setUser
     }
   },
   methods: {
     signout () {
+      this.setUser({})
       localStorage.clear()
       navigateTo('/login')
     }

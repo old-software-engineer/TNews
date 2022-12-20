@@ -3,6 +3,3 @@
     <Dashboard />
   </div>
 </template>
-
-<script>
-</script>

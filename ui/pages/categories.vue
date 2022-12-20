@@ -2,7 +2,7 @@
   <div class="px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-15 lg:pb-28">
     <div class=" relative mx-auto max-w-lg lg:max-w-7xl">
       <div class="flex justify-end ">
-        <NuxtLink href="/createcategory" class="-mt-2 mr-14 flex justify-end text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 hover:bg-gray-800">
+        <NuxtLink href="/createcategory" class="flex mb-14  justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
           Create Category
         </NuxtLink>
       </div>

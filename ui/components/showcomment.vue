@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import avatar from './avatar.vue'
 export default {
   components: { avatar },
@@ -37,7 +37,7 @@ export default {
     }
   },
   methods: {
-    timeSince (date) {
+    timeSince (date: Date) {
       const seconds = Math.floor((+new Date() - +date) / 1000)
 
       let interval = seconds / 31536000
@@ -64,7 +64,7 @@ export default {
       return Math.floor(seconds) + ' seconds'
     },
 
-    formattedDate (date) {
+    formattedDate (date: Date) {
       return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`
     }
   }
