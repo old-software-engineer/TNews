@@ -6,26 +6,36 @@ It is a news website prototype which is built on node js and nuxt 3. Here user c
 
 - Register new user
 ![Register new user](https://user-images.githubusercontent.com/15182066/208686016-7fa577ca-cce1-4e4b-8b02-45aa900c605b.png)
-- User login
-![User login](https://user-images.githubusercontent.com/15182066/208686009-a30506a3-b538-4432-905b-a044fb0c6b31.png)
+
+----
+
 - Create new article
-![Create new article](https://user-images.githubusercontent.com/15182066/208686031-634340af-c6a2-443c-9b06-694d039f661a.png)
-- Dashboard with all users' articles
-![All publications](https://user-images.githubusercontent.com/15182066/208686019-607083ae-7484-4cf9-8de6-9380aa1e355f.png)
-- User specific articles with public and private types
-![User specific articles](https://user-images.githubusercontent.com/15182066/208686034-90fd287b-7c5e-47cb-8947-d5bad0bacd9c.png)
-- Article detail page with likes and comments
-![Article detail page](https://user-images.githubusercontent.com/15182066/208686041-951d8850-6464-49d7-a202-e126191bb1e7.png)
+![Create new article](https://user-images.githubusercontent.com/15182066/208695151-4875af4f-3aeb-43d8-86f8-96dda05a08c6.png)
+
+----
+
+- All articles
+![All articles](https://user-images.githubusercontent.com/15182066/208694895-10e0c79e-23bb-4484-bb83-6eedbf714942.png)
+
+----
+
+- Article detail page
+![Article detail page](https://user-images.githubusercontent.com/15182066/208694920-4373146d-7ff9-4be5-84d9-307eebff932b.png)
+
+----
+
 - Create new category
-![Create new category](https://user-images.githubusercontent.com/15182066/208686051-930849ac-9cd4-4e8a-b3c9-c57aa8a3229a.png)
-- All categories
-![All categories](https://user-images.githubusercontent.com/15182066/208686046-9f22a2eb-4b94-4272-9579-4e3f6ad5467f.png)
-- Articles of specific category
-![Articles of specific category](https://user-images.githubusercontent.com/15182066/208686065-0d6f1d6c-570d-49f3-8ef7-db19034b985a.png)
-- Edit profile
-![Edit profile](https://user-images.githubusercontent.com/15182066/208686059-ebedfe50-9d3e-46dd-910f-3513408da7b7.png)
-- Edit password
-![Edit password](https://user-images.githubusercontent.com/15182066/208686062-da2c9781-e10c-4b62-9aa0-ceacbcaf4faf.png)
+![Create new category](https://user-images.githubusercontent.com/15182066/208694932-a47e3ccc-43bb-4b3b-88d4-4e8fd91b7095.png)
+
+----
+
+- Categories grid view
+![All categories](https://user-images.githubusercontent.com/15182066/208696351-15e5a4e1-e1ba-49fa-9f41-a4a381030315.png)
+
+
+
+
+
 
 # About
 
@@ -116,4 +126,6 @@ You can check the results on [http://localhost:3001](http://localhost:3001).
 
 **Server:** Node, Express, Knex, PostgreSQL, PassportJS, JWT, Bcrypt
 
-**Formatting and Linting:** ESLint, Prettier
+# Formatting and Linting
+- ESLint
+- Prettier
