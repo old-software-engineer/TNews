@@ -66,7 +66,7 @@
                   class="group inline-flex justify-center text-sm font-medium text-gray-500 hover:text-gray-900"
                 >
                   Sort
-                  <ChevronDownIcon
+                  <FunnelIcon
                     class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
                   />
@@ -118,6 +118,7 @@ import {
   Menu, MenuButton, MenuItem, MenuItems
 } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { FunnelIcon } from '@heroicons/vue/24/outline'
 
 </script>
 
