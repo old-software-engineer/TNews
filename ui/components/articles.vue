@@ -113,7 +113,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   Menu, MenuButton, MenuItem, MenuItems
 } from '@headlessui/vue'
@@ -121,11 +121,24 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 </script>
 
-<script>
+<script lang="ts">
+
+type Articles = {
+  id: number;
+  title: string;
+  description: string;
+  public_access: boolean;
+  category_id: number;
+  user_id: number;
+  created_at: Date;
+  user_name: string;
+  email: string;
+  category_name: string;
+}[]
 export default {
   props: {
     posts: {
-      type: Array,
+      type: Array as () => Articles,
       default () {
         return []
       }
@@ -155,7 +168,7 @@ export default {
     return {
       categories: [],
       path: routeName,
-      articles: []
+      articles: [] as Articles
     }
   },
   watch: {

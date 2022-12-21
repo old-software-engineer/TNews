@@ -45,7 +45,6 @@
                   <input
                     id="checked-checkbox"
                     v-model="public_access"
-                    checked
                     type="checkbox"
                     value="true"
                     class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
@@ -66,7 +65,7 @@
                     required
                     class="bg-gray-50 border mt-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 "
                   >
-                    <option v-for="category in categories" :key="category" :value="category.id">
+                    <option v-for="category in categories" :key="category.id" :value="category.id">
                       {{ category.name }}
                     </option>
                   </select>
@@ -87,21 +86,25 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { createToaster } from '@meforma/vue-toaster'
 const toaster = createToaster({
   type: 'warning',
   position: 'top-right'
 })
+type Categories = {
+  id: number;
+  name: string;
+}[]
 export default {
   data () {
     const config = useRuntimeConfig()
     return {
-      categories: [],
+      categories: [] as Categories,
       newArticel: {},
       title: '',
       description: '',
-      public_access: '',
+      public_access: Boolean,
       category_id: '',
       config
     }
@@ -132,7 +135,7 @@ export default {
         body: JSON.stringify({
           title: this.title,
           description: this.description,
-          public_access: !!this.public_access,
+          public_access: this.public_access,
           category_id: this.category_id
         })
       })

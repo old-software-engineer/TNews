@@ -26,12 +26,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+type Categories = {
+  id: number;
+  name: string;
+}[]
 export default {
   data () {
     const config = useRuntimeConfig()
     return {
-      categories: [],
+      categories: [] as Categories,
       config
     }
   },
@@ -43,7 +47,7 @@ export default {
       const categories = await fetch(`${this.config.public.baseUrl}/categories/all`)
       this.categories = await categories.json()
     },
-    handleClick (categoryName, categoryId) {
+    handleClick (categoryName: string, categoryId: number) {
       navigateTo(`/${categoryName.toLowerCase()}/${categoryId}`)
     }
   }

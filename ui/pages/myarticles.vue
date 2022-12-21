@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data () {
     const config = useRuntimeConfig()
@@ -27,7 +27,7 @@ export default {
       })
       this.articles = await articles.json()
     },
-    async getSortedArticles (type = 'asc', accessType) {
+    async getSortedArticles (type = 'asc', accessType: string) {
       const article = await fetch(`${this.config.public.baseUrl}/articles/user?` + new URLSearchParams({ date_order: type, access_type: accessType }), {
         headers: {
           Authorization: localStorage.token

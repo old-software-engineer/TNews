@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { createToaster } from '@meforma/vue-toaster'
 const toaster = createToaster({
   type: 'warning',

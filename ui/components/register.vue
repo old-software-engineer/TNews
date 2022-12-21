@@ -77,7 +77,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
 import { createToaster } from '@meforma/vue-toaster'
 const toaster = createToaster({
@@ -101,7 +101,7 @@ export default {
       if (this.name.length < 7 || this.name.trim() === '') {
         incorrectInput += 'Name should be atleast six letters long!.\n'
         toaster.show(incorrectInput)
-      } else if (this.password < 6 || this.password.trim() === '') {
+      } else if (this.password.length < 6 || this.password.trim() === '') {
         incorrectInput += 'Password should be atleat 6 characters!\n'
         toaster.show(incorrectInput)
       } else if (this.password !== this.confirmPassword) {

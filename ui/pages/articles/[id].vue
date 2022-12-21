@@ -4,16 +4,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data () {
     return {
-      articleId: null
+      articleId: '' as string
     }
   },
   created () {
     const route = useRoute()
-    this.articleId = route.params.id
+    this.articleId = route.params.id as string
   }
 }
 </script>

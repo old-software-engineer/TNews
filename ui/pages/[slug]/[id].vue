@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data () {
     const config = useRuntimeConfig()
@@ -24,10 +24,10 @@ export default {
   methods: {
     async getArticlesByCategory () {
       const articles = await fetch(`${this.config.public.baseUrl}/articles/category/${this.categoryId}`)
-      this.categoryArticles = await articles.json([])
+      this.categoryArticles = await articles.json()
     },
-    async getSortedArticles (type) {
-      const article = await fetch(`${this.config.public.baseUrl}/articles/category/${this.categoryId}?` + new URLSearchParams({ date_order: type }))
+    async getSortedArticles (type: String) {
+      const article = await fetch(`${this.config.public.baseUrl}/articles/category/${this.categoryId}?date_order=${type}`)
       this.categoryArticles = await article.json()
     }
   }

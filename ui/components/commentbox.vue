@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { createToaster } from '@meforma/vue-toaster'
 const toaster = createToaster({
   type: 'warning'
@@ -84,8 +84,8 @@ export default {
             user_id: this.user_id
           })
         })
-        this.getArticle()
-        this.$refs.form.reset()
+        this.getArticle();
+        (this.$refs.form as HTMLFormElement).reset()
       }
     }
   }

@@ -14,7 +14,7 @@
                     article.title
                   }}</span>
                   <div class="flex space-x-1 text-sm text-gray-500">
-                    <time>{{ formattedDate(new Date(article.created_at)) }}</time>
+                    <time>{{ formattedDate(new Date(`${article.created_at}`)) }}</time>
                   </div>
                 </div>
                 <div class="mr-4 cursor-pointer">
@@ -54,11 +54,30 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '~~/store'
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
+type Article = {
+current_user_reaction: string
+  id: number;
+  title: string;
+  description: string;
+  public_access: boolean;
+  category_id: number;
+  user_id: number;
+  created_at: Date;
+  likesCount: number;
+}
+type Comments ={
+  id: string;
+  comment: string;
+  article_id: number;
+  user_id: number;
+  created_at: Date;
+  user_name: string;
+}[]
 export default {
   props: {
     articleId: {
@@ -72,14 +91,11 @@ export default {
     const config = useRuntimeConfig()
     const route = useRoute()
     const routeName = route.path
-    const article = {}
-    const comments = []
-
     return {
       path: routeName,
-      article,
+      article: {} as Article,
       user,
-      comments,
+      comments: [] as Comments,
       reaction: '',
       config
     }
@@ -128,7 +144,7 @@ export default {
       )
       this.getArticle()
     },
-    timeSince (date) {
+    timeSince (date: Date) {
       const seconds = Math.floor((+new Date() - +date) / 1000)
 
       let interval = seconds / 31536000
@@ -155,7 +171,7 @@ export default {
       return Math.floor(seconds) + ' seconds'
     },
 
-    formattedDate (date) {
+    formattedDate (date: Date) {
       return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`
     }
   }

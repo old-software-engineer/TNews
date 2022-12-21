@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
     userName: {
@@ -17,7 +17,7 @@ export default {
     }
   },
   methods: {
-    getInitialLetters (userName) {
+    getInitialLetters (userName: string) {
       const matches = userName.match(/\b(\w)/g)
       return matches?.join('').substring(0, 2)
     }

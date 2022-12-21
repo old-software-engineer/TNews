@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { storeToRefs, mapActions } from 'pinia'
 import { useAuthStore } from '~~/store'
 const authStore = useAuthStore()
@@ -16,10 +16,8 @@ const { user } = storeToRefs(authStore)
 const { setUser } = mapActions(useAuthStore, ['setUser'])
 export default {
   data () {
-    const route = useRoute()
-    const routeName = route.path
     return {
-      path: routeName,
+      path: '/',
       user,
       setUser
     }
@@ -31,8 +29,8 @@ export default {
     }
   },
   mounted () {
-    if (!this.user) {
-      localStorage.getItem('user') ? this.setUser(JSON.parse(localStorage.getItem('user'))) : navigateTo('/login')
+    if (!Object.keys(this.user).length) {
+      localStorage.getItem('user') ? this.setUser(JSON.parse(localStorage.getItem('user') || '{}')) : navigateTo('/login')
     }
   }
 }

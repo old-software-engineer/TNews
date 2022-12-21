@@ -98,14 +98,14 @@
   </Disclosure>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { storeToRefs, mapActions } from 'pinia'
 import { useAuthStore } from '~~/store'
 </script>
 
-<script>
+<script lang="ts">
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
   { name: 'My Articles', href: '/myarticles', current: false },

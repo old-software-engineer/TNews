@@ -63,10 +63,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { storeToRefs, mapActions } from 'pinia'
 import { createToaster } from '@meforma/vue-toaster'
-import { mapActions } from 'pinia'
 import { useAuthStore } from '../store'
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
 const toaster = createToaster({
   type: 'warning',
   position: 'top-right'
@@ -79,7 +81,8 @@ export default {
       email: '',
       password: '',
       setUser,
-      config
+      config,
+      user
     }
   },
 
@@ -103,7 +106,7 @@ export default {
         localStorage.setItem('token', res.token)
         navigateTo('/')
       } catch (err) {
-        toaster.show('Invalid Email or Password')
+        toaster.show(err)
       }
     }
   }

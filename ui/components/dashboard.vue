@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data () {
     const config = useRuntimeConfig()
@@ -24,7 +24,7 @@ export default {
       this.articles = await articles.json()
     },
 
-    async getSortedArticles (type) {
+    async getSortedArticles (type: string) {
       const article = await fetch(`${this.config.public.baseUrl}/articles/all?` + new URLSearchParams({ date_order: type }))
       this.articles = await article.json()
     }

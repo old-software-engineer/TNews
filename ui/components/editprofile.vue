@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapActions } from 'pinia'
 import { createToaster } from '@meforma/vue-toaster'
 import { useAuthStore } from '../store'
@@ -89,7 +89,7 @@ export default {
       } else {
         const response = await res.json()
         toaster.show(response.status)
-        const updatedUser = { ...JSON.parse(localStorage.getItem('user')), name: this.name, email: this.email }
+        const updatedUser = { ...JSON.parse(localStorage.getItem('user') || '{}'), name: this.name, email: this.email }
         this.setUser(updatedUser)
         localStorage.setItem('user', JSON.stringify(updatedUser))
       }
