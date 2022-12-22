@@ -17,7 +17,7 @@ const { setUser } = mapActions(useAuthStore, ['setUser'])
 export default {
   data () {
     return {
-      path: '/',
+      path: '',
       user,
       setUser
     }
@@ -32,6 +32,11 @@ export default {
     if (!Object.keys(this.user).length) {
       localStorage.getItem('user') ? this.setUser(JSON.parse(localStorage.getItem('user') || '{}')) : navigateTo('/login')
     }
+  },
+  created () {
+    const route = useRoute()
+    const routeName = route.path
+    this.path = routeName
   }
 }
 </script>

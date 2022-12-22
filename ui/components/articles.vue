@@ -45,13 +45,13 @@
                     <MenuItem>
                       <span
                         class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
-                        @click="getSortedArticles('asc','public')"
+                        @click="accessType = 'public'"
                       >Public</span>
                     </MenuItem>
                     <MenuItem>
                       <span
                         class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
-                        @click="getSortedArticles('asc','private')"
+                        @click="accessType = 'private'"
                       >Private</span>
                     </MenuItem>
                   </div>
@@ -87,13 +87,13 @@
                     <MenuItem>
                       <span
                         class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
-                        @click="getSortedArticles('desc')"
+                        @click="sortOption = 'desc'"
                       >Latest</span>
                     </MenuItem>
                     <MenuItem>
                       <a
                         class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
-                        @click="getSortedArticles('asc')"
+                        @click="sortOption = 'asc'"
                       >Oldest</a>
                     </MenuItem>
                   </div>
@@ -169,12 +169,20 @@ export default {
     return {
       categories: [],
       path: routeName,
-      articles: [] as Articles
+      articles: [] as Articles,
+      sortOption: 'asc',
+      accessType: 'private'
     }
   },
   watch: {
     posts () {
       this.articles = this.posts
+    },
+    sortOption () {
+      this.getSortedArticles(this.sortOption, this.accessType)
+    },
+    accessType () {
+      this.getSortedArticles(this.sortOption, this.accessType)
     }
   }
 }
