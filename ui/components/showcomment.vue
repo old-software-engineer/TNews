@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import formattedDate from './utils/formattedDate'
 import avatar from './avatar.vue'
 export default {
   components: { avatar },
@@ -36,37 +37,12 @@ export default {
       }
     }
   },
-  methods: {
-    timeSince (date: Date) {
-      const seconds = Math.floor((+new Date() - +date) / 1000)
-
-      let interval = seconds / 31536000
-
-      if (interval > 1) {
-        return Math.floor(interval) + ' years ago'
-      }
-      interval = seconds / 2592000
-      if (interval > 1) {
-        return Math.floor(interval) + ' months ago'
-      }
-      interval = seconds / 86400
-      if (interval > 1) {
-        return Math.floor(interval) + ' days'
-      }
-      interval = seconds / 3600
-      if (interval > 1) {
-        return Math.floor(interval) + ' hours'
-      }
-      interval = seconds / 60
-      if (interval > 1) {
-        return Math.floor(interval) + ' minutes'
-      }
-      return Math.floor(seconds) + ' seconds'
-    },
-
-    formattedDate (date: Date) {
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`
+  data () {
+    return {
+      formattedDate
     }
+  },
+  methods: {
   }
 }
 </script>

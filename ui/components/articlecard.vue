@@ -67,6 +67,7 @@
 </template>
 
 <script setup lang="ts">
+
 import {
   Menu, MenuButton, MenuItem, MenuItems
 } from '@headlessui/vue'
@@ -75,6 +76,7 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 </script>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import formattedDate from './utils/formattedDate'
 export default defineComponent({
   props: {
     post: {
@@ -96,7 +98,8 @@ export default defineComponent({
     const routeName = route.path
     return {
       path: routeName,
-      config
+      config,
+      formattedDate
     }
   },
   methods: {
@@ -112,29 +115,6 @@ export default defineComponent({
         }
       })
       this.getArticles()
-    },
-    timeSince (date:Date) {
-      const seconds = Math.floor((+new Date() - +date) / 1000)
-
-      let interval = seconds / 31536000
-
-      if (interval > 1) {
-        return Math.floor(interval) + ' years ago'
-      }
-      interval = seconds / 2592000
-      if (interval > 1) {
-        return Math.floor(interval) + ' months ago'
-      }
-      interval = seconds / 86400
-      if (interval >= 2) {
-        return Math.floor(interval) + ' days ago'
-      } else if (interval > 1 && interval < 2) {
-        return '1 day ago'
-      }
-      return 'Today'
-    },
-    formattedDate (date:Date) {
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`
     }
   }
 })

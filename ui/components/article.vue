@@ -56,6 +56,7 @@
 
 <script lang="ts">
 import { storeToRefs } from 'pinia'
+import formattedDate from './utils/formattedDate'
 import { useAuthStore } from '~~/store'
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
@@ -97,7 +98,8 @@ export default {
       user,
       comments: [] as Comments,
       reaction: '',
-      config
+      config,
+      formattedDate
     }
   },
   watch: {
@@ -143,36 +145,6 @@ export default {
         }
       )
       this.getArticle()
-    },
-    timeSince (date: Date) {
-      const seconds = Math.floor((+new Date() - +date) / 1000)
-
-      let interval = seconds / 31536000
-
-      if (interval > 1) {
-        return Math.floor(interval) + ' years ago'
-      }
-      interval = seconds / 2592000
-      if (interval > 1) {
-        return Math.floor(interval) + ' months ago'
-      }
-      interval = seconds / 86400
-      if (interval > 1) {
-        return Math.floor(interval) + ' days'
-      }
-      interval = seconds / 3600
-      if (interval > 1) {
-        return Math.floor(interval) + ' hours'
-      }
-      interval = seconds / 60
-      if (interval > 1) {
-        return Math.floor(interval) + ' minutes'
-      }
-      return Math.floor(seconds) + ' seconds'
-    },
-
-    formattedDate (date: Date) {
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${this.timeSince(date)})`
     }
   }
 }
