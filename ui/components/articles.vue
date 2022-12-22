@@ -44,15 +44,21 @@
                   <div class="py-1">
                     <MenuItem>
                       <span
-                        class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
+                        :disabled="accessType ==='public'"
+                        :class="[`text-gray-500 block px-4 py-2 ${(accessType ==='public')? 'bg-gray-300': 'cursor-pointer'} text-sm`]"
                         @click="accessType = 'public'"
-                      >Public</span>
+                      >
+                        Public
+                      </span>
                     </MenuItem>
                     <MenuItem>
                       <span
-                        class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
+                        :disabled="accessType ==='private'"
+                        :class="[`text-gray-500 block px-4 py-2 text-sm ${(accessType ==='private') ? 'bg-gray-300': 'cursor-pointer' }`]"
                         @click="accessType = 'private'"
-                      >Private</span>
+                      >
+                        Private
+                      </span>
                     </MenuItem>
                   </div>
                 </MenuItems>
@@ -86,15 +92,21 @@
                   <div class="py-1">
                     <MenuItem>
                       <span
-                        class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
+                        :disabled="sortOption ==='desc'"
+                        :class="[`text-gray-500 block px-4 py-2 w-full text-sm ${(sortOption ==='desc') ? 'bg-gray-300' : 'cursor-pointer' } `]"
                         @click="sortOption = 'desc'"
-                      >Latest</span>
+                      >
+                        Latest
+                      </span>
                     </MenuItem>
                     <MenuItem>
-                      <a
-                        class="text-gray-500 block px-4 py-2 text-sm hover:cursor-pointer"
+                      <span
+                        :disabled="sortOption ==='asc'"
+                        :class="[`text-gray-500 block w-full px-4 py-2 text-sm ${(sortOption ==='asc') ? 'bg-gray-300' : 'cursor-pointer'}  `]"
                         @click="sortOption = 'asc'"
-                      >Oldest</a>
+                      >
+                        Oldest
+                      </span>
                     </MenuItem>
                   </div>
                 </MenuItems>
