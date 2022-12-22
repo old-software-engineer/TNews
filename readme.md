@@ -89,7 +89,8 @@ You can check the results on [http://localhost:3001](http://localhost:3001).
 # Screenshots
 
 - Register new user
-![Register new user](https://user-images.githubusercontent.com/15182066/208686016-7fa577ca-cce1-4e4b-8b02-45aa900c605b.png)
+![tnews-register-page](https://user-images.githubusercontent.com/15182066/209081693-a50b0382-5c9f-47bf-94dc-67a7aa1b6b66.png)
+
 
 ----
 
