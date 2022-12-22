@@ -170,6 +170,7 @@ export default {
       categories: [],
       path: routeName,
       articles: [] as Articles,
+      showCreateArticle: false,
       sortOption: 'asc',
       accessType: 'private'
     }
