@@ -96,7 +96,7 @@ export default {
         localStorage.setItem('token', res.token)
         navigateTo('/')
       } catch (err) {
-        toaster.show(err)
+        toaster.show('Invalid User Email or Password')
       }
     }
   }

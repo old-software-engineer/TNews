@@ -104,7 +104,7 @@ export default {
       newArticel: {},
       title: '',
       description: '',
-      public_access: Boolean,
+      public_access: false,
       category_id: '',
       config
     }

@@ -11,6 +11,9 @@ const timeSince = (date: Date) => {
     return Math.floor(interval) + ' months ago'
   }
   interval = seconds / 86400
+  if (interval > 1 && interval < 2) {
+    return Math.floor(interval) + ' day'
+  }
   if (interval > 1) {
     return Math.floor(interval) + ' days'
   }
@@ -25,7 +28,7 @@ const timeSince = (date: Date) => {
   return Math.floor(seconds) + ' seconds'
 }
 const formattedDate = (date: Date) => {
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${timeSince(date)})`
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}(${timeSince(date) + ' ago'})`
 }
 
 export default formattedDate

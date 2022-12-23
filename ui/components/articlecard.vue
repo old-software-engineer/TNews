@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="mt-4 block">
+  <div class="bg-gray-100 p-4 rounded-2xl">
+    <div>
       <div class="flex flex-row justify-between">
         <p class="text-xl font-semibold text-gray-900">
           {{ post.title }}

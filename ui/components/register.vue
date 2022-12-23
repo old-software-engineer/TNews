@@ -120,7 +120,7 @@ export default {
         }
       ).then(() => {
         navigateTo('/login')
-      }).catch(e => toaster.show(e))
+      }).catch(() => toaster.show('User Already exists'))
     }
 
   }

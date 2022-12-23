@@ -4,38 +4,36 @@
       <div class="h-full flex justify-center">
         <div class="w-full md:w-3/5 p-8 bg-white  shadow-md">
           <span class="text-xl font-semibold block"> Edit Your Profile</span>
-          <div class="rounded  shadow p-6">
-            <div class="pb-6">
-              <label for="name" class="font-semibold text-gray-700 block pb-1">Name</label>
-              <div class="flex">
-                <input
-                  id="username"
-                  v-model="name"
-                  required
-                  class="rounded-r border border-gray-300  px-4 py-2 w-full"
-                  type="text"
-                  placeholder="Enter name"
-                >
-              </div>
-            </div>
-            <div class="pb-4">
-              <label for="email" class="font-semibold text-gray-700 block pb-1">Email</label>
+          <div class="pb-6 mt-6">
+            <label for="name" class="font-semibold text-gray-700 block pb-1">Name</label>
+            <div class="flex">
               <input
-                id="email"
-                v-model="email"
+                id="username"
+                v-model="name"
                 required
-                class="border border-gray-300   rounded-r px-4 py-2 w-full"
-                type="email"
-                placeholder="Enter Email"
+                class="rounded-r border border-gray-300  px-4 py-2 w-full"
+                type="text"
+                placeholder="Enter name"
               >
             </div>
-            <div class="flex justify-end">
-              <span
-                href="#"
-                :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 cursor-pointer', name && email ? 'hover:bg-gray-800' : '']"
-                @click="validateForm"
-              >Save</span>
-            </div>
+          </div>
+          <div class="pb-4">
+            <label for="email" class="font-semibold text-gray-700 block pb-1">Email</label>
+            <input
+              id="email"
+              v-model="email"
+              required
+              class="border border-gray-300   rounded-r px-4 py-2 w-full"
+              type="email"
+              placeholder="Enter Email"
+            >
+          </div>
+          <div class="flex justify-end">
+            <span
+              href="#"
+              :class="['-mt-2 text-md font-bold text-white bg-gray-700 rounded-full px-5 py-2 cursor-pointer', name && email ? 'hover:bg-gray-800' : '']"
+              @click="validateForm"
+            >Save</span>
           </div>
         </div>
       </div>
@@ -44,9 +42,11 @@
 </template>
 
 <script lang="ts">
-import { mapActions } from 'pinia'
+import { mapActions, storeToRefs } from 'pinia'
 import { createToaster } from '@meforma/vue-toaster'
 import { useAuthStore } from '../store'
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
 const toaster = createToaster({
   type: 'warning',
   position: 'top-right'
@@ -59,8 +59,13 @@ export default {
       name: '',
       email: '',
       setUser,
-      config
+      config,
+      user
     }
+  },
+  created () {
+    this.name = this.user.name
+    this.email = this.user.email
   },
   methods: {
     validateForm () {
