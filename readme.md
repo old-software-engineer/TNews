@@ -100,7 +100,7 @@ You can check the results on [http://localhost:3001](http://localhost:3001).
 ----
 
 - All articles
-![tnews-all-publications-page](https://user-images.githubusercontent.com/15182066/209081997-0168188e-1800-46ad-86f1-1e63f10a4d89.png)
+![tnews-all-publication-1 2](https://user-images.githubusercontent.com/15182066/209315318-c67b099f-f8d7-403b-8967-4b3adc58b7eb.png)
 
 ----
 
