@@ -31,6 +31,16 @@ It is a news website prototype which is built on node js and nuxt 3. Here user c
 ### ESLint
 - This helped in catching errors during development, keep a consistent code style, and avoid formatting creating large diffs in pull requests.
 
+# Tech Stack
+
+**Client:** Nuxt 3, Typescript, Pinia, TailwindCSS
+
+**Server:** Node, Express, Knex, PostgreSQL, PassportJS, JWT, Bcrypt
+
+# Formatting and Linting
+- ESLint
+- Prettier
+
 # Installation
 
 Requirements:
@@ -117,12 +127,3 @@ You can check the results on [http://localhost:3001](http://localhost:3001).
 - Categories grid view
 ![All categories](https://user-images.githubusercontent.com/15182066/208696351-15e5a4e1-e1ba-49fa-9f41-a4a381030315.png)
 
-# Tech Stack
-
-**Client:** Nuxt 3, Typescript, Pinia, TailwindCSS
-
-**Server:** Node, Express, Knex, PostgreSQL, PassportJS, JWT, Bcrypt
-
-# Formatting and Linting
-- ESLint
-- Prettier
