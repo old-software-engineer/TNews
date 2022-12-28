@@ -50,6 +50,10 @@ const toaster = createToaster({
   type: 'warning',
   position: 'top-right'
 })
+const successToaster = createToaster({
+  type: 'success',
+  position: 'top-right'
+})
 export default {
   data () {
     const config = useRuntimeConfig()
@@ -91,7 +95,7 @@ export default {
         toaster.show('Old password is incorrect!')
       } else {
         const response = await res.json()
-        toaster.show(response.status)
+        successToaster.show(response.status)
       }
     }
   }

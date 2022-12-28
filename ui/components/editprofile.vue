@@ -51,6 +51,10 @@ const toaster = createToaster({
   type: 'warning',
   position: 'top-right'
 })
+const successToaster = createToaster({
+  type: 'success',
+  position: 'top-right'
+})
 const { setUser } = mapActions(useAuthStore, ['setUser'])
 export default {
   data () {
@@ -63,14 +67,22 @@ export default {
       user
     }
   },
-  created () {
+  watch: {
+    user () {
+      this.name = this.user.name
+      this.email = this.user.email
+    }
+
+  },
+  mounted () {
     this.name = this.user.name
     this.email = this.user.email
   },
   methods: {
     validateForm () {
-      if (this.name.length < 5 || this.name.trim() === '') {
-        toaster.show('Name should be atleast six letters long!')
+      const namePattern = /^[a-zA-Z ,.'-]+$/
+      if (this.name.length < 5 || this.name.trim() === '' || !namePattern.test(this.name)) {
+        toaster.show('Name should be atleast six letters long and should not contain number!')
       } else {
         this.editProfile()
       }
@@ -93,7 +105,7 @@ export default {
         toaster.show('Email already exists!')
       } else {
         const response = await res.json()
-        toaster.show(response.status)
+        successToaster.show(response.status)
         const updatedUser = { ...JSON.parse(localStorage.getItem('user') || '{}'), name: this.name, email: this.email }
         this.setUser(updatedUser)
         localStorage.setItem('user', JSON.stringify(updatedUser))

@@ -98,8 +98,9 @@ export default {
   methods: {
     validateForm () {
       let incorrectInput = ''
-      if (this.name.length < 7 || this.name.trim() === '') {
-        incorrectInput += 'Name should be atleast six letters long!.\n'
+      const namePattern = /^[a-zA-Z ,.'-]+$/
+      if (this.name.length < 7 || this.name.trim() === '' || !namePattern.test(this.name)) {
+        incorrectInput += 'Name should be only a atleast six letters long and should not contain number!.\n'
         toaster.show(incorrectInput)
       } else if (this.password.length < 6 || this.password.trim() === '') {
         incorrectInput += 'Password should be atleat 6 characters!\n'
